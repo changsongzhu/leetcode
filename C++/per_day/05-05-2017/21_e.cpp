@@ -1,32 +1,53 @@
 /**
-20[E]. Valid Parentheses
+21[E]. Merge Two Sorted Lists
  
-Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
- 
-Notes:
-·      Use a stack to save the left parentheses. If meet a right one, check if the top of the stack is the matched one. If so, pop it and check the next one. Otherwise, it is not valid parentheses. 
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
 
 **/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    bool isValid(string s) {
-        stack<char> stk;
-        for(int i=0;i<s.size();i++)
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode dummy(-1);
+        ListNode *cur  = &dummy;
+        while(l1!=NULL||l2!=NULL)
         {
-            if(s[i]=='('||s[i]=='{'||s[i]=='[')
-                stk.push(s[i]);
-            else if((s[i]==')'&&!stk.empty()&&stk.top()=='(')||
-                    (s[i]==']'&&!stk.empty()&&stk.top()=='[')||
-                    (s[i]=='}'&&!stk.empty()&&stk.top()=='{'))
-            {
-                stk.pop();
-            }
-            else
-                return false;
+           if(l1!=NULL&&l2!=NULL)
+           {
+               if(l1->val>l2->val)
+               {
+                   cur->next=l1;
+                   cur=l1;
+                   l1=l1->next;
+               }
+               else
+               {
+                   cur->next=l2;
+                   cur=l2;
+                   l2=l2->next;
+               }
+           }
+           else if(l1!=NULL)
+           {
+               cur->next=l1;
+               cur=l1;
+               l1=l1->next;
+           }
+           else
+           {
+               cur->next=l2;
+               cur=l2;
+               l2=l2->next;
+           }
         }
-        if(!stk.empty()) return false;
-        return true;
+        return dummy.next
     }
 };
-

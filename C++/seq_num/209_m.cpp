@@ -1,0 +1,27 @@
+/**
+209[M] Minimum size Subarray Sum
+ 
+Given an array of n positive integers and a positive integer s, find the minimal length of a contiguoussubarray of which the sum ≥ s. If there isn't one, return 0 instead.
+For example, given the array [2,3,1,2,4,3] and s = 7,
+the subarray [4,3] has the minimal length under the problem constraint.
+**/
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+       if(nums.empty()) return 0;
+       int size=nums.size(),left=0,right=0,res=size+1,sum=0;
+       while(right<size)
+       {
+           while(sum<s&&right<size)
+           {
+               sum+=nums[right++];
+           }
+           while(sum>=s)
+           {
+               res=min(res, right-left);
+               sum-=nums[left++];
+           }
+       }
+       return (res==size+1)?0:res;
+    }
+};

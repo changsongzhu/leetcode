@@ -33,13 +33,22 @@ public:
             if(m.second.size()==2)
             {
                 int tmp=m.second[0]+m.second[1];
-                if(res.size()==0)min_val=tmp;
-                if((res.size()!=0)&&(tmp < min_val))
+                if(res.size()==0)
+                {
+                    min_val=tmp;
+                    res.push_back(m.first);
+                    
+                }
+                else if((res.size()!=0)&&(tmp < min_val))
                 {
                     min_val=tmp;
                     res.clear();
-                }
-                res.push_back(m.first);     
+                    res.push_back(m.first);
+                } 
+                else if((res.size()!=0)&&(tmp == min_val))
+                {
+                    res.push_back(m.first);
+                } 
             }
         }
         return res;

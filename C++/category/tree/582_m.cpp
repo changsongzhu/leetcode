@@ -47,3 +47,27 @@ public:
     }
 };
 
+class Solution {
+public:
+    vector<int> killProcess(vector<int>& pid, vector<int>& ppid, int kill) {
+        unordered_map<int, vector<int> m;
+        for(int i=0;i<pid.size();i++)
+        {
+            m[ppid[i]].push_back(pid[i]);
+        }
+        queue<int> q;
+        vector<int> res;
+        q.push(kill);
+        while(!q.empty)
+        {
+            int task=q.front();q.pop();
+            if(m.count(task))
+            {
+                for(auto p:m[task]) q.push(p);
+            }
+            res.push_back(task);
+        }
+        return res;
+    }
+};
+

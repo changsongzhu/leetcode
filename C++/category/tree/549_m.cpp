@@ -26,12 +26,12 @@ class Solution {
 public:
     int longestConsecutive(TreeNode* root) {
         int res=0;
-        helper(root, res);
+        helper(root, root, res);
         return res;
     }
     pair<int, int> helper(TreeNode *node, TreeNode *parent, int &res)
     {
-        if(root==NULL) return 0;
+        if(root==NULL) return {0,0};
         int inc=0, dec=0;
         auto left=helper(node->left, node, res);
         auto right=helper(node->right,node, res);

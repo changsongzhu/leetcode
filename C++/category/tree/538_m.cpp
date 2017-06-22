@@ -61,3 +61,27 @@ public:
     }
 
 };
+
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(root==NULL) return root;
+        vector<TreeNode*> v;
+        helper(root, v);
+        int sum=0;
+        for(int i=v.size()-1;i>=0;i--)
+        {
+           int tmp=v[i]->val;
+           v[i]->val+=sum;
+           sum+=tmp;
+        }
+        return root;
+    }
+    void helper(TreeNode *root, vector<TreeNode*> &v)
+    {
+        if(root==NULL) return;
+        helper(root->left, v);
+        v.push_back(root);
+        helper(root->right, v);
+    }
+};

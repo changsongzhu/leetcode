@@ -48,3 +48,19 @@ public:
 
 };
 
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL) return NULL;
+        TreeNode *cur=root;
+        int max=max(p->val, q->val);
+        int min=min(p->val, q->val);
+        while(cur)
+        {
+            if(cur->val>=min&&cur->val<=max) return cur;
+            else if(cur->val<min) cur=cur->right;
+            else cur=cur->left;
+        }
+        return cur;
+    }
+};

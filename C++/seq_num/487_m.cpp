@@ -24,8 +24,8 @@ public:
         queue<int> q;
         for(right=0;right<nums.size();right++)
         {
-            if(nums.size()==0) q.push(right);
-            while(nmms.size()>k)
+            if(nums[right]==0) q.push(right);
+            while(q.size()>k)
             {
                 left=q.front()+1;q.pop();
             }

@@ -1,108 +1,46 @@
+/**
+621[M]. Task Schedule
+Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks.Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
+However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
+You need to return the least number of intervals the CPU will take to finish all the given tasks.
+Example 1:
+Input: tasks = ['A','A','A','B','B','B'], n = 2
+Output: 8
+Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+Note:
+The number of tasks is in the range [1, 10000].
+The integer n is in the range [0, 100].
+**/
+
 class Solution {
 public:
-	unsigned int largestFactor;
- 
-	multiset<unsigned int> primeFactors(unsigned int number)
-	{
-		multiset<unsigned int> factors;
-		while (number % 7==0)
-		{
-			number /= 7;
-			factors.insert(7);
-		}
-		while (number % 5 == 0)
-		{
-			number /= 5;
-			factors.insert(5);
-		}
-		while (number % 3 == 0)
-		{
-			number /= 3;
-			factors.insert(3);
-		}
-		while (number % 2 == 0)
-		{
-			number /= 2;
-			factors.insert(2);
-		}
-		largestFactor = number;
-		return factors;
- 
-	}
-int smallestFactorization(int a) {
-		if (a == 0)
-			return 0;
-		if (a < 10)
-			return a;
-		multiset<unsigned int> factors = primeFactors(a);
-		if (largestFactor > 7)
-			return 0;
-		string answer = "";
-		for (int i = 7; i>3; i--)
-		{
-			if (i == 4 || i == 6)
-			{
-				continue;
-			}
-			auto exist = factors.count(i);
-			if (exist == 0)
-				continue;
-			for (int e = 0; e < exist; e++)
-			{
-				answer += std::to_string(i);
-			}
-		}	
- 
-		int twos = factors.count(2);
-		int threes = factors.count(3);
-		while (twos >= 3)
-		{
-			answer += std::to_string(8);
-			twos -= 3;
-		}
-		while (threes >= 2)
-		{
-			answer += std::to_string(9);
-			threes -= 2;
-		}
-		while (threes > 0)
-		{
-			if (twos >= 1)
-			{
-				answer += std::to_string(6);
-				threes--;
-				twos--;
-			}
-			else {
-				answer += std::to_string(3);
-				threes--;
-			}
-		}
- 
-		while (twos >= 1)
-		{
-			if (twos >= 2)
-			{
-				answer += std::to_string(4);
-				twos -= 2;
-			}
-			else if(twos >= 1) {
-				answer += std::to_string(2);
-				twos--;
-			}
-		}
-		std::sort(answer.begin(), answer.end());
-		stringstream ss;
-		ss << answer;
-		unsigned long long bigNum;
-		ss >> std::dec >> bigNum;
-		if (bigNum <= INT_MAX)
-		{
-			return (unsigned int) bigNum;
-		}
-		else {
-			return 0;
-		}
-	}
+        int leastInterval(vector<char>& tasks, int n) {
+            if(n==0) return tasks.size();
+            vector<int> t(26, 0);
+            int res=0;
+            int total=tasks.size();
+            for(auto a:tasks) t[a-'A']++;
+            int cnt=0;
+            sort(t.rbegin(), t.rend());
+            while(cnt<total)
+            {
+                int diff=0;
+                for(int i=0;i<t.size();i++)
+                {
+                   if(t[i]!=0)
+                   {
+                      diff++;
+                      t[i]--;
+                   }
+                   if(diff==n+1) break;
+                }
+                sort(t.rbegin(),t.rend());
+                cnt+=diff;
+                if(diff>n) res+=diff;
+                else res+=(cnt==total?diff:n+1);
+            }
+            return res;
+        
+        }
 };
 

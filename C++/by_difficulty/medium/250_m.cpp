@@ -25,7 +25,7 @@ public:
         if(root==NULL) return true;
         bool left=dfs(root->left, res);
         bool right=dfs(root->right, res);
-        if(left!=true||right==true||
+        if(left!=true||right!=true||
            (root->left&&root->val!=root->left->val)||
            (root->right&&root->val!=root->right->val)) return false;
         res++;

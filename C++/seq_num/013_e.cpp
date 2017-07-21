@@ -33,3 +33,19 @@ public:
         }
     }
 };
+
+//Refined Version
+class Solution {
+public:
+    int romanToInt(string s) {;
+        map<char, int> m;
+        m['M']=1000;m['D']=500;m['C']=100;m['L']=50;m['X']=10;m['V']=5;m['I']=1;
+        int res=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(i>0&&m[s[i]]>m[s[i-1]]) res-=2*m[s[i-1]];
+            res+=m[s[i]];
+        }
+        return res;
+    }
+};

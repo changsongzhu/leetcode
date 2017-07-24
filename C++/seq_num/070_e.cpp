@@ -16,3 +16,14 @@ public:
         return m[n];
     }
 };
+
+class Solution{
+public:
+    int climbStairs(int n) {
+        int dp[3]={0};
+        dp[0]=dp[1]=1;
+        for(int i=2;i<=n;i++)
+            m[i%3]=m[(i-1)%3]+m[(i-2)%3];
+        return m[n%3];
+    }
+};

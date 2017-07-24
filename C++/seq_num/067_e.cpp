@@ -43,3 +43,23 @@ public:
     }
 };
 
+//Refined Version
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string res;
+        int m=a.size(), n=b.size();
+        int carry=0;
+        int i=0,j=0;
+        while(i<m||j<n)
+        {
+            int n1=(i<m)?a[m-(i++)-1]-'0':0;
+            int n2=(j<n)?b[n-(j++)-1]-'0':0;
+            int val=(n1+n2+carry)%10;
+            carry=(n1+n2+carry)/10;
+            res.insert(res.begin(), val+'0');
+        }
+        if(carry) res.insert(res.begin(), carry+'0');
+        return res;
+    }
+};

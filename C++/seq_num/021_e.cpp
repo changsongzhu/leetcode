@@ -51,3 +51,21 @@ public:
         return dummy.next
     }
 };
+
+//Refined Version
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNoe dummy(-1);
+        ListNode *prev=&dummy;
+        while(l1||l2)
+        {
+            prev->next=(l1&&l2)?(l1->val<l2->va?l1:l2):(l1?l1:l2);
+            prev=prev->next;
+            l1?l1->next:l1;
+            l2?l2->next:l2;
+        }
+        return dummy.next;
+    }
+};
+

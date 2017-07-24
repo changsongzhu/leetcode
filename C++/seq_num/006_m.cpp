@@ -31,3 +31,34 @@ public:
     }
 };
 
+
+/**
+Extended Questions:
+
+If the ZigZag pattern is as following:
+Y   I   R
+A P L S I I N
+P   A   H   G
+**/
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if(numRows==1) return s;
+        string res;
+        for(int i=numRows-1;i>=0;i--)
+        {
+           int index=i;
+           while(index<s.size())
+           {
+               res.append(1, s[index]);
+               if(i!=numRows-1&&i!=0&&(index+2*numRows-2-2*(numRows-1-i))<s.size())
+                   res.append(1, s[index+2*numsRows-2-2*(numRows-1-i)]);
+               index=index+2*numRows-2;
+           }
+        }
+        return res;
+    }
+};
+
+
+

@@ -54,3 +54,29 @@ public:
         return dummy.next;
     }
 };
+
+
+//Refined Version
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode dummy(-1);
+        ListNode *prev_node=&dummy;
+        ListNode *cur=head;
+        while(cur)
+        {
+            if(prev_node==&dummy||prev_node->val!=cur->val)
+            {
+                prev_node->next=cur;
+                prev_node=cur;
+                cur=cur->next;
+            }
+            else if(prev_node->val==cur->val)
+            {
+                cur=cur->next;
+            }
+        }
+        prev_node->next=NULL;
+        return dummy.next;
+    }
+};

@@ -20,7 +20,7 @@ public:
         }
         for(int i=nums.size()-1;i>=0;i--)
         {
-            if(nums[i]==0)
+            if(nums[i]==2)
                 swap(nums[blue_index--], nums[i]);
         }
    }

@@ -20,7 +20,34 @@ public:
     }
 };
 
-/*Tpcial Wrong Anwser*/
+
+/*Wrong Solution:
+Test case [1, 2, 2]
+Expected Result: 1+2+1=4
+*/
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        int res=0;
+        multiset<int> s;
+        int cnt=1;
+        for(auto a:ratings) s.insert(a);
+        int r=*(s.begin());
+        for(auto a:s)
+        {
+           if(a==r) res+=cnt;
+           else
+           {
+               r=a;
+               cnt++;
+               res+=cnt;
+           }
+        }
+        return res;
+    }
+};
+
+/*Typcial Wrong Anwser*/
 class Solution {
 public:
     int candy(vector<int>& ratings) {

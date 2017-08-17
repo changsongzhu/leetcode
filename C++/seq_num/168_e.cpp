@@ -12,6 +12,11 @@ For example:
 28 -> AB
 
 **/
+/**
+26  -> Z   1
+52  -> AZ  2
+78  -> BZ  3
+**/
 class Solution {
 public:
     string convertToTitle(int n) {

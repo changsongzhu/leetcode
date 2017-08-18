@@ -31,6 +31,22 @@ public:
     }
 };
 
+
+/**
+Dynamic Programming Solution:
+
+Example:
+	_ a b b b c
+      _ 1 1 1 1 1 1
+      a 0 1 1 1 1 1
+      b 0 0 1 2 3 3
+      c 0 0 0 0 0 3
+
+dp[i][j]: denotes the s[0:j] the distince number of subsequence for t[0:i]
+
+dp[i][j] = dp[i][j-1] (t[i-1]!=s[j-1])
+           dp[i][j-1]+dp[i-1][j-1] (t[i-1]==s[j-1])
+**/
 class Solution {
 public:
     int numDistinct(string s, string t) {

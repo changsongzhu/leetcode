@@ -6,6 +6,30 @@ Note:
 You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 **/
 
+
+
+/**
+Dynamic Programming
+
+
+Exmaple
+
+g[i][0]   0    0    0    0   0    0    0   0
+g[i][1]   0    1    2    2   6    6    7   8
+g[i][2]   0    1    2    2   8    8    8   9
+
+prices    2    3    4    1   7    6    8   9   
+
+l[i][0]   0    0    0    0   0    0    0   0
+l[i][1]   0    1    2    -1  6    5    7   8 
+l[i][2]   0    1    2    -1  8    6    8   9
+
+
+
+
+
+**/
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {

@@ -31,3 +31,38 @@ public:
         return res;
     }
 };
+/*
+Example:
+	4 3 2 7 8 2 3 1
+        0
+        0     4
+        0     4     7
+        0   3 4     7
+        0 2 3 4     7
+        0 2 3 4 0   7
+        0 2 3 4 0   7  8
+        1 2 3 4 0   7  8
+        1 2 3 4 0 0 7  8
+*/
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        vector<int> res;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]==i+1) continue;
+            int val=nums[i];
+            nums[i]=0;
+            while(nums[val-1]!=val){
+                int tmp=val;
+                val=nums[val-1];
+                nums[tmp-1]=tmp;
+            }
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]==0) res.push_back(i+1);
+        }
+        return res;
+    }
+};

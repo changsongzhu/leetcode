@@ -31,3 +31,27 @@ public:
     }
 };
 
+//Another Solution
+class Solution {
+public:
+    int minCut(string s) {
+        if(s.size()<2) return 0;
+        int n=s.size();
+        bool p[n][n];
+        int dp[n];
+        fill_n(&p[0][0], n*n, false);
+        for(int i=0;i<n;i++) dp[i]=i;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<=i;j++)
+            {
+                if(s[i]==s[j]&&(i-j<=1||p[j+1][i-1]))
+                {
+                    p[j][i]=true;
+                    dp[i]=min(dp[i], j==0?0:dp[j-1]+1);
+                }
+            }
+        }
+        return dp[n-1];
+    }
+};

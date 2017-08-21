@@ -8,6 +8,30 @@ Given sorted array nums = [1,1,1,2,2,3],
 Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
 **/
 
+//Refined Solution
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        map<int, int> m;
+        int index=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(m.find(nums[i])==m.end())
+            {
+                nums[index++]=nums[i];
+                m[nums[i]]++;
+            }
+            else if(m[nums[i]]<2)
+            {
+                nums[index++]=nums[i];
+                m[nums[i]]++;
+            }
+        }
+        return index;
+        
+    }
+};
+
 
 class Solution {
 public:

@@ -21,7 +21,8 @@ public:
             int val=0;
             if((i<n&&j==m)||(i<n&&j<m&&nums1[i]<=nums2[j]))
                 val=nums1[i++];
-            else if((i==n&&j<m)||(i<n&&j<m&&nums1[i]>=nums2[j]))
+            //else if((i==n&&j<m)||(i<n&&j<m&&nums1[i]>=nums2[j]))
+            else
                 val=nums2[j++];
             if(k==mid)a=val;
             else if(k==mid+1)b=val;

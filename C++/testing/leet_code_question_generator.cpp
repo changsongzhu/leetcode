@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int case_num=10;
+int case_num=20;
 int size=250;
 int pool[] = {
     
@@ -25,7 +25,7 @@ int pool[] = {
 };
 
 int locked_num=104;
-int locked [] = {
+int locked[] = {
              156, 157, 158, 159, 161, 163, 170, 186, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 259, 261, 265,
 	     266, 267, 269, 270, 271, 272, 276, 277, 280, 281, 285, 286, 288, 291, 293, 294, 296, 298, 302, 305, 308, 311, 314, 317, 320,
 	     323, 325, 333, 339, 340, 346, 348, 351, 353, 356, 358, 359, 360, 361, 362, 363, 364, 365, 366, 369, 370, 379, 408, 411, 418,
@@ -37,15 +37,16 @@ int locked [] = {
 int main()
 {
 
-   srand(time(NULL));
    set<int> s;
    map<int, int> m;
    for(int i=0;i<locked_num;i++) m[locked[i]]++;
+   srand(time(NULL));
    for(int i=0;i<case_num;i++)
    {
        do{
            int val=rand()%size;
-           if(m.find(locked[val])==m.end()&&s.find(pool[val])==s.end())
+           cout<<"val= "<<val<<endl;
+           if(m.find(pool[val])==m.end()&&s.find(pool[val])==s.end())
            {
                s .insert(pool[val]);
                break;

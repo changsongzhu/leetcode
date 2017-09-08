@@ -54,7 +54,7 @@ public:
         }
         for(int i=start;i<=n/2;i++)
         {
-            if(n%i==0&&n/i>=start)
+            if(n%i==0)
             {
                 path.push_back(i);
                 dfs(res, path, i, n/i);

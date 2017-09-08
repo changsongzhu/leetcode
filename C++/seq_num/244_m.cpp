@@ -14,7 +14,7 @@ You may assume that word1 does not equal to word2, and word1 and word2 are both 
  
 class WordDistance {
 public:
-    WordDistance(vector<string>& words) {
+    WordDistance(vector<string> words) {
 	for(int i=0;i<words.size();i++)
            mp[words[i]].push_back(i);    
     }
@@ -24,7 +24,7 @@ public:
         int i=0,j=0;
         while(i<mp[word1].size()&&j<mp[word2].size())
         {
-            res=min(res, abs(mp[word1][i]-mp[word2][j]);
+            res=min(res, abs(mp[word1][i]-mp[word2][j]));
             if(mp[word1][i]<mp[word2][j]) i++;
             else j++;
         }

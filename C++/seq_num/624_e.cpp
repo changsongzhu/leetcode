@@ -17,22 +17,14 @@ The integers in the m arrays will be in the range of [-10000, 10000].
 
 class Solution {
 public:
-	int maxDistance(vector<vector<int>>& arrays) {
-            int res=0;
-            int n=arrays.size();
-            vector<int> right_mn(n, INT_MAX),right_mn(n, INT_MAX);
-            for(int i=1;i<n;i++)
-            {
-                left_mn[i]=min(left_mn[i-1], arrays[i-1][0]);
-            }
-            for(int i=n-2;i>=0;i++)
-            {
-                right_mn[i]=min(right_mn[i+1], arrays[i+1][0]);
-            }
-            for(int i=0;i<n;i++)
-               res=arrays[i]-min(left_mn[i], right_mn[i]);
-            return res;
-    	
-	}
+    int maxDistance(vector<vector<int>>& arrays) {
+        int left = arrays[0][0], right = arrays[0].back(), ans = 0;
+        for(int i = 1; i < arrays.size(); i++)
+        {
+            ans = max(ans, max(abs(arrays[i][0] - right), abs(arrays[i].back() - left)));
+            left = min(left, arrays[i][0]);
+            right = max(right, arrays[i].back());
+        }
+        return ans;
+    }
 };
-

@@ -9,10 +9,10 @@ Note: There will be exactly one celebrity if he/she is in the party. Return the 
 class Solution {
 public:
     int findCelebrity(int n) {
-        for(int i=0;i<n-1;i++)
+        for(int i=0;i<n;i++)
         {
            bool flag=true;
-           for(int j=0;j<n-1;j++)
+           for(int j=0;j<n;j++)
            {
                if(j==i) continue;
                if(knows(i, j))
@@ -25,8 +25,8 @@ public:
                    flag=false;
                    break;
                }
-               if(flag==true) return i;
            }
+           if(flag==true) return i;
         }
         return -1;
    }

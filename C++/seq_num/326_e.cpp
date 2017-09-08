@@ -6,6 +6,27 @@ Follow up:
 Could you do it without using any loop / recursion?
 **/
 
+
+class Solution{
+public:
+    bool isPowerofThree(int n)
+    {
+        while(n&&n%3==0)
+        {
+            n/=3;
+        }
+        return n==1;
+    }
+};
+
+class Solution{
+public:
+    bool isPowerOfThree(int n)
+    {
+        return (n>0&&pow(3, 19)%n==0);
+    }
+};
+
 class Solution {
 public:
     bool isPowerOfThree(int n) {

@@ -44,7 +44,7 @@ public:
             if(nums[i]==1)
             {
                 int start=i;
-                while(nums[i]==0)i++;
+                while(nums[i]==1)i++;
                 res=max(res, i-start);
             }
             else

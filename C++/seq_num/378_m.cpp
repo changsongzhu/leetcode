@@ -10,12 +10,10 @@ matrix = [
    [12, 13, 15]
 ],
 k = 8,
- 
 return 13.
 Note: 
 You may assume k is always valid, 1 ≤ k ≤ n2.
 **/
-
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {

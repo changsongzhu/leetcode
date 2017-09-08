@@ -53,3 +53,25 @@ public:
     }
 };
 
+//Right Solution
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& height) {
+        height.push_back(0);
+        height.insert(height.begin(), 0);
+        stack<int> stk;
+        stk.push(0);
+        int res=0;
+        for(int i=1;i<height.size();i++)
+        {
+            while(height[i]<height[stk.top()])
+            {
+                int index=stk.top();stk.pop();
+                res=max(res, height[index]*(i-1-stk.top()));
+            }
+            stk.push(i);
+        }
+        return res;
+        
+    }
+};

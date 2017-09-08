@@ -24,7 +24,7 @@ public:
             {
                 res=max(res, i-mp[sum-k]);
             }
-            mp[sum]=i;
+            if(mp.find(sum)==mp.end())mp[sum]=i;
         }
         return res;
     }

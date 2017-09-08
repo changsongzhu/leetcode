@@ -9,6 +9,34 @@ You should return [1,2,3,6,9,8,7,4,5].
 
 **/
 
+//Refined Solution
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+        if(matrix.empty()) return res;
+        int m=matrix.size(), n=matrix[0].size();
+        int u=0, d=m-1, l=0,r=n-1;
+        while(true)
+        {
+            //up
+            for(int i=l;i<=r;i++)res.push_back(matrix[u][i]);
+            if(++u>d) break;
+            //right
+            for(int i=u;i<=d;i++)res.push_back(matrix[i][r]);
+            if(--r<l) break;
+            //down
+            for(int i=r;i>=l;i--)res.push_back(matrix[d][i]);
+            if(--d<u) break;
+            //left
+            for(int i=d;i>=u;i--)res.push_back(matrix[i][l]);
+            if(++l>r) break;
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {

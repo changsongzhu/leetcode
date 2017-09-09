@@ -21,13 +21,13 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 class Solution {
 public:
     TreeNode *upsideDownBinaryTree(TreeNode *root) {
-       if(!root) return NULL;
-       if(!root->left&&!root->right) return root;
+       if(!root||!root->left) return root;
+       TreeNode *cur_left=root->left;
+       TreeNode *cur_right=root->right;
        TreeNode *node=upsideDownBinaryTree(root->left);
-       node->left=root->right;
-       node->right=root;
+       cur_left->left=cur_right;
+       cur_left->right=root;
        root->left=root->right=NULL;
        return node;
     }
-}；
-
+};

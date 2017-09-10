@@ -12,31 +12,41 @@ Assume you have a dictionary and given a word, find whether its abbreviation is 
 Example: 
 Given dictionary = [ "deer", "door", "cake", "card" ]  isUnique("dear") -> false isUnique("cart") -> true isUnique("cane") -> false isUnique("make") -> true
 **/
- 
 class ValidWordAbbr {
 public:
-    ValidWordAbbr(vector<string> &dictionary) {
+    ValidWordAbbr(vector<string> dictionary) {
        for(int i=0;i<dictionary.size();i++)
        {
+           if(dict.find(dictionary[i])!=dict.end())
+               continue;
+           else
+               dict[dictionary[i]]++;
            if(dictionary[i].size()<3) mp[dictionary[i]]++;
-           string tmp;
-           tmp.insert(tmp.size(), dictionary[i][0])
-           tmp=tmp+to_string(dictionary[i].size()-2);
-           tmp.insert(tmp.size(), dictionary[i][dictionary[i].size-1]);
-           mp[tmp]++;
+           else   
+           {
+               string tmp;
+                tmp.insert(tmp.end(), dictionary[i][0]);
+                tmp=tmp+to_string(dictionary[i].size()-2);
+                tmp.insert(tmp.end(), dictionary[i][dictionary[i].size()-1]);
+                mp[tmp]++;
+           }
        }
     }
     bool isUnique(string word) {
-       string tmp;
+        string tmp;
        if(word.size()<3) tmp=word;
-       tmp.insert(tmp.size(), word[0])
-       tmp=tmp+to_string(word.size()-2);
-       tmp.insert(tmp.size(), word[word.size()-1]);
-       if(mp.find(tmp != mp.end()); return false;
+       else
+       {
+           tmp.insert(tmp.end(), word[0]);
+           tmp=tmp+to_string(word.size()-2);
+           tmp.insert(tmp.end(), word[word.size()-1]);
+       }
+       if(dict.find(word)!=dict.end()&&mp[tmp]==1) return true;
+       if(mp.find(tmp) != mp.end()) return false;
        else return true;
  
     }
 private:
    map<string, int> mp;
-};
-
+   map<string, int>dict;
+}; 

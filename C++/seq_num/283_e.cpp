@@ -7,6 +7,27 @@ Note:
 You must do this in-place without making a copy of the array.
 Minimize the total number of operations.
 **/
+
+//Another Solution
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int cnt=0;
+        int index=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]!=0)
+                nums[index++]=nums[i];
+            else
+                cnt++;
+        }
+        for(int j=0;j<cnt;j++)
+        {
+            nums[nums.size()-1-j]=0;
+        }
+    }
+};
+
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {

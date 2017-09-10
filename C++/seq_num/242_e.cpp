@@ -13,6 +13,15 @@ What if the inputs contain unicode characters? How would you adapt your solution
 class Solution {
 public:
     bool isAnagram(string s, string t) {
+       sort(s.begin(), s.end());
+       sort(t.begin(), t.end());
+       return s==t;
+    }
+};
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
        if(s.size()!=t.size()) return false;
        map<char, int> mp1;
        map<char, int> mp2;

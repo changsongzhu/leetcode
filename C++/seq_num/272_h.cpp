@@ -26,7 +26,7 @@ public:
        dfs(root, target, k, q);
        while(!q.empty())
        {
-           auto a=q.front();q.pop();
+           auto a=q.top();q.pop();
            res.push_back(a.second);
        }
        return res;
@@ -35,7 +35,7 @@ public:
     {
        if(root==NULL) return;
        dfs(root->left, target, k, q);
-       q.push({abs(root->val-target, root->val});
+       q.push({abs(root->val-target), root->val});
        if(q.size()>k) q.pop();
        dfs(root->right, target, k, q);
     }

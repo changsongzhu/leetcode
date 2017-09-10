@@ -5,6 +5,37 @@ Given a singly linked list, determine if it is a palindrome.
 
 **/
 
+
+//Space Complexity (O(n)) Solution
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *cur=head;
+        vector<int> res;
+        while(cur)
+        {
+            res.push_back(cur->val);
+            cur=cur->next;
+        }
+        int left=0, right=res.size()-1;
+        while(left<right)
+        {
+            if(res[left++]!=res[right--]) return false;
+        }
+        return true;
+        
+    }
+};
+
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {

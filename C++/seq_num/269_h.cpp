@@ -34,7 +34,10 @@ public:
          for(;j<mn;j++)
          {
              if(words[i][j]!=words[i+1][j])
+             {
                  graph[words[i][j]-'a'][words[i+1][j]-'a']=true;
+                 break;
+             }
          }
          if(j==mn&&words[i].size()>words[i+1].size()) return "";
       }
@@ -55,7 +58,7 @@ public:
            if(i==idx||!graph[idx][i]) continue;
            if(!dfs(graph, path, i, res)) return false;
        }
-       path[idx]=true;
+       path[idx]=false;
        graph[idx][idx]=false;
        res+=char(idx+'a');
        return true;

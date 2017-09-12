@@ -37,6 +37,54 @@ public:
         @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
     PhoneDirectory(int maxNumbers) {
         occupied.resize(maxNumbers, false);
+        for(int i=maxNumbers-1;i>=0;i--)
+        {
+            stk.push(i);
+        }   
+    }
+    
+    /** Provide a number which is not assigned to anyone.
+        @return - Return an available number. Return -1 if none is available. */
+    int get() {
+        if(stk.empty()) return -1;
+        int val=stk.top();stk.pop();
+        occupied[val]=true;
+        return val;
+        
+    }
+    
+    /** Check if a number is available or not. */
+    bool check(int number) {
+        return occupied[number]==false;
+    }
+    
+    /** Recycle or release a number. */
+    void release(int number) {
+        if(occupied[number]==true)
+        {
+            occupied[number]=false;
+            stk.push(number);
+        }
+    }
+private:
+    vector<bool> occupied;
+    stack<int> stk;
+};
+
+/**
+ * Your PhoneDirectory object will be instantiated and called as such:
+ * PhoneDirectory obj = new PhoneDirectory(maxNumbers);
+ * int param_1 = obj.get();
+ * bool param_2 = obj.check(number);
+ * obj.release(number);
+ */
+
+class PhoneDirectory {
+public:
+    /** Initialize your data structure here
+        @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
+    PhoneDirectory(int maxNumbers) {
+        occupied.resize(maxNumbers, false);
         ListNode *prev=&freeNumber;
         for(int i=0;i<=maxNumbers;i++);
         {

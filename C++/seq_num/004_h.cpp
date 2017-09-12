@@ -10,6 +10,29 @@ Example 2:
 nums1 = [1, 2] nums2 = [3, 4]  The median is (2 + 3)/2 = 2.5 
 **/
 
+//Refined Version
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m=nums1.size(), n=nums2.size();
+        int mid=(m+n)/2;
+        int i=0,j=0;
+        double a=0,b=0;
+        for(int k=1;k<=mid+1;k++)
+        {
+            int c=i<m?nums1[i]:INT_MAX;
+            int d=j<n?nums2[j]:INT_MAX;
+            int val=(c<=d?c:d);
+            c<=d?i++:j++;
+            if(k==mid) a=val;
+            if(k==mid+1)b=val;
+        }
+        if((m+n)&1) return b;
+        else return (a+b)/2;   
+    }
+};
+
+
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {

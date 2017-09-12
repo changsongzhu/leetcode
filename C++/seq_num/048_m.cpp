@@ -65,15 +65,15 @@ public:
         int up=0,down=r-1;
         while(up<down)
         {
-            for(int i=0;i<c;i++
+            for(int i=0;i<c;i++)
                 swap(m[up][i], m[down][i]);
             up++;
             down--;
         }
         for(int i=0;i<r;i++)
         {
-            for(int j=r-i, k=1;j<c;j++, k++)
-                swap(m[i][j], m[i-k][j-k]);
+            for(int j=c-1, k=0;j>=0;j--, k++)
+                swap(m[i][j], m[i+k][j+k]);
         }
     }
 };

@@ -27,6 +27,23 @@ public:
     }
 };
 
+
+class Solution {
+public:
+    int reverse(int x) {
+        int sign=x>0?1:-1;
+        x=x*sign;
+        string tmp=to_string(x);
+        int left=0,right=tmp.size()-1;
+        while(left<right)
+        {
+            swap(tmp[left++], tmp[right--]);
+        }
+        long long res=stoll(tmp);
+        return res>INT_MAX?0:sign*res;      
+    }
+};
+
 //Using String to Reverse the Integer
 class Solution {
 public:

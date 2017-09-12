@@ -7,6 +7,25 @@ Given "abcabcbb", the answer is "abc", which the length is 3.
 Given "bbbbb", the answer is "b", with the length of 1.
 Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 **/
+//Refined Solution
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        map<char, int> m;
+        int left=0;
+        int res=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(m.count(s[i]))
+            {
+                left=max(m[s[i]]+1, left);
+            }
+            res=max(res, i-left+1);
+            m[s[i]]=i;
+        }
+        return res;
+    }
+};
 
 class Solution {
 public:

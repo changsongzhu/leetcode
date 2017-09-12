@@ -47,6 +47,7 @@ public:
         for(int i=1;i<length;i++)
             res[i]+=res[i-1];
         res.pop_back();
+        return res;
     }
 };
 

@@ -7,6 +7,21 @@ Note:
 Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
 **/
 
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int m=nums.size();
+        k=k%m;
+        for(int i=0;i<m-k;i++)
+        {
+            nums.push_back(nums[0]);
+            nums.erase(nums.begin());
+        }
+    }
+};
+
+
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {

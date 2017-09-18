@@ -40,6 +40,7 @@ public:
         {
             int id=p.first*n+p.second;
             cnt++;
+            root[id]=id;
             for(auto d:dirs)
             {
                 int x=p.first+d[0],y=p.second+d[1];
@@ -58,7 +59,7 @@ public:
     }
     int findRoots(vector<int> roots, int id)
     {
-        if(roots[id] != id)
+        while(roots[id] != id)
         {
            roots[id]=roots[roots[id]];
            id=roots[id];

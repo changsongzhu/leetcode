@@ -8,6 +8,18 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 **/
 
+//Using priority_queue Solution
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int> q(nums.begin(), nums.end());
+        for(int i=0;i<k-1;i++)
+            q.pop();
+        return q.top();
+    }
+};
+
+
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {

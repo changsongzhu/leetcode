@@ -19,7 +19,11 @@ public:
     
     void helper(vector<string>&res, int n, int m)
     {
-        if(n<=0) return "";
+        if(n<=0)
+        {
+            res.push_back("");
+            return;
+        }
         if(n==1)
         {
             res.push_back("1");

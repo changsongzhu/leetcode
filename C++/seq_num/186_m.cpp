@@ -13,6 +13,17 @@ Could you do it in-place without allocating extra space?
 class Solution {
 public:
     void reverseWords(string &s) {
+        istringstream is(s);
+        is>>s;
+        string tmp;
+        while(is>>tmp) s=tmp+" "+s;
+    }
+};
+
+
+class Solution {
+public:
+    void reverseWords(string &s) {
        if(s.size()==0&&s.size()==1) return;
        reverse(s.begin(), s.end());
        int start=0;

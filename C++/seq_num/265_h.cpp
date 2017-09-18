@@ -19,7 +19,7 @@ public:
             int m1=INT_MAX, m2=m1, id=-1;
             for(int j=0;j<costs[i].size();j++)
             {
-                int cost=costs[i][j]+(j==idx)?min2:min1;
+                int cost=costs[i][j]+((j==idx)?min2:min1);
                 if(cost<m1)
                 {
                     m2=m1;m1=cost;id=j;

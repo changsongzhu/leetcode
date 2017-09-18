@@ -18,7 +18,7 @@ class ZigzagIterator {
 public:
     ZigzagIterator(vector<int>& v1, vector<int>& v2) {
         idx=0;
-        int i=0;j=0;
+        int i=0,j=0;
         while(i<v1.size()||j<v2.size())
         {
            if(i<v1.size()&&j<v2.size())
@@ -41,7 +41,7 @@ public:
     bool hasNext() {
         return idx<vec.size();
     }
-prvate:
+private:
     vector<int> vec;
     int idx;
 };

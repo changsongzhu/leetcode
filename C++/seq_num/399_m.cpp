@@ -13,43 +13,57 @@ queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
 The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
 **/
 
-class Solution {
+ss Solution {
 public:
     vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
         vector<double> res;
         unordered_map<string, unordered_map<string, double> > g;
         for(int i=0;i<equations.size();i++){
-            g[equations[i].first].emplace(equations[i].second, values[i]);
-            g[equations[i].first].emplace(equations[i].first, 1.0);
-            g[equations[i].second].emplace(equations[i].first, 1/values[i]);
-            g[equations[i].second].emplace(equations[i].second, 1.0);
+            g[equations[i].first][equations[i].second]=values[i];
+            g[equations[i].first][equations[i].first]=1.0;
+            g[equations[i].second][equations[i].first]= 1/values[i];
+            g[equations[i].second][equations[i].second]= 1.0;
         }
-        for(auto query:queries){
-           if(!g.count(query.first) ||!g.count(query.second)) res.push_back(-1.0);
-           else{
-              queue<pair<string, double> > q;
-              unordered_set<string> used({query.first});
-              bool find=false;
-              q.push({query.first, 1.0});
-              while(!q.empty()&&!find){
-                  pair<string, double> t=q.front();q.pop();
-                  if(t.first==query.second){
-                      find=true;
-                      t.push_back(t.second);
-                      break;
-                  }
-                  for(auto a:g[t.first]){
-                      if(!used.count(a.first)){
-                          used.insert(a.first);
-                          a.second*=t.second;
-                          q.push(a);
-                      }
-                  }
-              }
-              if(!find) res.push_back(-1.0);
+        for(auto query:queries)
+        {
+           if(!g.count(query.first)||!g.count(query.second)) res.push_back(-1.0);
+           else
+           {
+               queue<pair<string, double> > q;
+               unordered_set<string> used({query.first});
+               bool find=false;
+               q.push({query.first, 1.0});
+               while(!q.empty()&&!find)
+               {
+                   queue<pair<string, double> > next;
+               
+                   while(!q.empty()&&!find)
+                   {
+                       pair<string, double> t=q.front();q.pop();
+                       if(t.first==query.second)
+                       {
+                           find=true;
+                           res.push_back(t.second);
+                           break;
+                       }
+                       else
+                       {
+                           for(auto a:g[t.first])
+                           {
+                               if(!used.count(a.first))
+                               {
+                                   used.insert(a.first);
+                                   a.second*=t.second;
+                                   next.push(a);
+                               }
+                           }
+                       }
+                   }
+                   q=next;
+               }
+               if(!find) res.push_back(-1.0);
            }
         }
         return res;
     }
 };
-

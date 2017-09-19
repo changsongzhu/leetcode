@@ -24,6 +24,30 @@ Example 3:
 Return false
 **/
 
+//Refined Solution
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        istringstream in(preorder);
+        string val;
+        int d=0;
+        vector<string> v;
+        while(getline(in, val, ',')) v.push_back(val);
+        for(int i=0;i<v.size()-1;i++)
+        {
+            if(v[i]=="#")
+            {
+                if(d==0) return false;
+                d--;
+            }
+            else
+                d++;
+        }
+        return d!=0?false:v.back()=="#";
+    }
+};
+
+
 #include <string>
 #include <stack>
 #include <iostream>

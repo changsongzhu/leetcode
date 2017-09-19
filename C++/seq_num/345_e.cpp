@@ -28,7 +28,7 @@ private:
     bool isVowel(char c)
     {
         char tmp=tolower(c);
-        if(tmp=='a'||tmp=='e'||tmp=='i'||tmp='o'||tmp=='u') return true;
+        if(tmp=='a'||tmp=='e'||tmp=='i'||tmp=='o'||tmp=='u') return true;
         else return false;
     }
 };

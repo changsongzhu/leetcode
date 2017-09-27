@@ -14,6 +14,35 @@ Example 2:
 Given s = "apple", abbr = "a2e":  Return false.
 **/
 
+class Solution {
+public:
+    bool validWordAbbreviation(string word, string abbr) {
+        string tmp;
+        for(int i=0;i<abbr.size();i++)
+        {
+            if(abbr[i]>'0'&&abbr[i]<='9')
+            {
+                int count=0;
+                while(i<abbr.size()&&abbr[i]>='0'&&abbr[i]<='9') count=count*10+abbr[i++]-'0';
+                i--;
+                if(count+tmp.size()>word.size()) return false;
+                tmp.append(count, '*');
+            }
+            else
+            {
+                tmp.append(1, abbr[i]);
+            }
+        }
+        if(tmp.size()!=word.size()) return false;
+        for(int i=0;i<word.size();i++)
+        {
+            if(tmp[i]!='*'&&tmp[i]!=word[i]) return false;
+        }
+        return true;
+    }
+};
+
+//wrong answer
 class Solution
 {
 public:

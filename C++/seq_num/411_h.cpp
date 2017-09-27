@@ -23,6 +23,7 @@ public:
 
     string minAbbreviation(string target, vector<string>& dictionary) {
         my_pq q;
+        if(dictionary.size()==0) return to_string(target.size());
         q=generate(target);
         while(!q.empty())
         {

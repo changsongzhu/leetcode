@@ -13,13 +13,13 @@ public:
     int longestPalindrome(string s) {
         map<char, int> mp;
         for(int i=0;i<s.size();i++) mp[s[i]]++;
-        int odd_max=0;
+        int odd_found=false;
         int res=0;
         for(map<char,int>::iterator it=mp.begin();it!=mp.end();it++)
         {
             if((it->second%2)==1)
             {
-                odd_max=max(odd_max, it->second);
+                odd_found=true;
                 res+=(it->second-1);
             }
             else
@@ -27,6 +27,6 @@ public:
                 res+=it->second;
             }
         }
-        return (odd_max!=0)?res+1:res;
+        return (odd_found)?res+1:res;
     }
 };

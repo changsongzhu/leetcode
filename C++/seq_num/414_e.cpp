@@ -10,6 +10,21 @@ Example 3:
 Input: [2, 2, 3, 1]  Output: 1  Explanation: Note that the third maximum here means the third maximum distinct number. Both numbers with value 2 are both considered as second maximum.
 **/
 
+
+//Set Solution
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        set<int> s;
+        for(int i=0;i<nums.size();i++)
+        {
+            s.insert(nums[i]);
+            if(s.size()>3) s.erase(s.begin());
+        }
+        return s.size()==3?*(s.begin()):*(s.rbegin());
+    }
+};
+
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {

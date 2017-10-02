@@ -54,17 +54,17 @@ public:
         vector<vector<int> > dirs={{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
         vector<char> way={'l','u', 'r', 'd'};
         queue<pair<int, int> > q;
-        unordered_map<int, string> m;
+        unordered_map<int, string> u;
         dists[ball[0]][ball[1]]=0;
         q.push({ball[0], ball[1]});
         while(!q.empty())
         {
-            auto t=q.front(), q.pop();
+            auto t=q.front(); q.pop();
             for(int i=0;i<4;i++)
             {
                int x=t.first, y=t.second, dist=dists[x][y];
                string path=u[x*n+y];
-               while(x>=0&&x<m&&y>=n&&y<n&&maze[x][y]==0&&(x!=hole[0]||y!=hole[1])
+               while(x>=0&&x<m&&y>=0&&y<n&&maze[x][y]==0&&(x!=hole[0]||y!=hole[1]))
                {
                    x+=dirs[i][0];y+=dirs[i][1];++dist;
                }
@@ -86,8 +86,8 @@ public:
                }
             }
         }
+
         string res=u[hole[0]*n+hole[1]];
-        return res==INT_MAX:"impossible":res;
+        return res.empty() ? "impossible" : res;
     }
 };
-

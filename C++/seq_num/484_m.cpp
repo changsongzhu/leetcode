@@ -33,7 +33,7 @@ public:
               i--;
            }
         }
-        returnr res;
+        return res;
     }
 };
 

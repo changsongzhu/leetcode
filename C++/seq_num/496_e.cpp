@@ -21,6 +21,28 @@ All elements in nums1 and nums2 are unique.
 The length of both nums1 and nums2 would not exceed 1000.
 
 **/
+//Stack solution
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& findNums, vector<int>& nums) {
+        map<int, int> m;
+        stack<int> stk;
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+            while(!stk.empty()&&nums[i]>stk.top())
+            {
+                stk.pop();
+            }
+            m[nums[i]]=(stk.empty())?-1:stk.top();
+            stk.push(nums[i]);
+        }
+        vector<int> res;
+        for(int i=0;i<findNums.size();i++)
+            res.push_back(m[findNums[i]]);
+        return res;
+    }
+};
+
 
 class Solution {
 public:

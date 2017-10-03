@@ -9,6 +9,36 @@ Explanation: 99 x 91 = 9009, 9009 % 1337 = 987
 Note:
 The range of n is [1,8].
 **/
+//Refined Solution
+class Solution {
+public:
+    int largestPalindrome(int n) {
+        if(n==1) return 9;
+        long long high=pow(10, n)-1;
+        long long low=pow(10, n-1);
+        long long num=high*high/(pow(10, n));
+        long long val=0;
+        while(1)
+        {
+            long long val=createPalindrome(num--);
+            for(long long j=high;j>=low;j--)
+            {
+                if(val%j==0) return val%1337;
+                if(j*high<val) break;
+                
+            }
+        }
+        return val%1337;
+    }
+    long long createPalindrome(long long num)
+    {
+        string s=to_string(num), ss=s;
+        reverse(s.begin(), s.end());
+        return stoll(ss+s);
+    }
+ 
+};
+
 class Solution {
 public:
     int largestPalindrome(int n) {

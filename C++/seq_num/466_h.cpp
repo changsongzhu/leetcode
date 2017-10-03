@@ -11,11 +11,47 @@ s2="ab", n2=2
 Return:
 2
 **/
-
+//Refined Version
 class Solution {
 public:
     int getMaxRepetitions(string s1, int n1, string s2, int n2) {
         if(s1.size()*n1<s2.size()*n2) return 0;
+        int s1_size=s1.size(),s2_size=s2.size();
+        int i=0,j=0,m=0,n=0, cnt=0;
+        while(m<n1)
+        {
+            if(s1[i++]==s2[j])
+            {
+                j++;
+                if(j==s2_size)
+                {
+                    n++;
+                    j=0;
+                }
+            }
+            if(i==s1_size)
+            {
+                m++;
+                i=0;
+            }
+            
+            if(m==n1) break;
+            if(i==0&&j==0)
+            {
+                return (n1*n)/(m*n2);
+            }
+        }
+        return n/n2;
+    }
+};
+
+
+//TLE solution
+class Solution {
+public:
+    int getMaxRepetitions(string s1, int n1, string s2, int n2) {
+        if(s1.size()*n1<s2.size()*n2) return 0;
+        int s1_size=s1.size(),s2_size=s2.size();
         int i=0,j=0,m=0,n=0, cnt=0;
         while(m<n1)
         {
@@ -23,20 +59,21 @@ public:
             {
                 j++;
             }
-            if(i==s1.size())
-            {
-                m++;
-                i=0;
-            }
-            if(m==n1) break;
-            if(j==s2.size())
+            if(j==s2_size)
             {
                 n++;
                 j=0;
             }
+            if(i==s1_size)
+            {
+                m++;
+                i=0;
+            }
+            
+            if(m==n1) break;
             if(i==0&&j==0)
             {
-                return(n1/m)*n/n2;
+                return (n1*n)/(m*n2);
             }
         }
         return n/n2;

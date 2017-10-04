@@ -20,6 +20,24 @@ You may assume the sum of all the numbers is in the range of a signed 32-bit int
 
 **/
 
+//Refined Solutio
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+       if(nums.size()<2) return false;
+       vector<int> sums(nums.size()+1, 0);
+       for(int i=0;i<nums.size();i++) sums[i+1]=sums[i]+nums[i];
+       for(int i=1;i<=nums.size();i++)
+       {
+           for(int j=0;j<i-1;j++)
+           {
+               if((k!=0&&(sums[i]-sums[j])%k==0)||(k==0&&(sums[i]-sums[j])==0)) return true;
+           }
+       }
+       return false;
+    }
+};
+
 class Solution {
 public:
     bool checkSubarraySum(vector<int>& nums, int k) {

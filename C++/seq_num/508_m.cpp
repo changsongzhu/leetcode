@@ -28,25 +28,18 @@ Note: You may assume the sum of values in any subtree is in the range of 32-bit 
 class Solution {
 public:
     vector<int> findFrequentTreeSum(TreeNode* root) {
+        if(root==NULL) return {};
         map<int, int> mp;
         vector<int> res;
         priority_queue<pair<int, int> > q;
         int sum=0;
         dfs(root, mp);
         for(auto a:mp) q.push({a.second, a.first});
-        int k=0;
-        while(!q.empty())
+        int k=q.top().first;
+        while(!q.empty()&&k==q.top().first)
         {
-            auto t=q.top();q.pop();
-            k=(k==0)?t.first:k;
-            if(t.first==k)
-            {
-                res.push_back(t.second);
-            }
-            else
-            {
-                break;
-            }
+            res.push_back(q.top().second);
+            q.pop();
         }
         return res;
     }

@@ -28,6 +28,36 @@ Follow up: Could you do that without using any extra space? (Assume that the imp
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+        if(root==NULL) return {};
+        map<int, int> m;
+        dfs(root, m);
+        priority_queue<pair<int, int> > q;
+        for(auto a:m) q.push({a.second, a.first});
+        int k=q.top().first;
+        vector<int> res;
+        while(!q.empty()&&k==q.top().first)
+        {
+            res.push_back(q.top().second);
+            q.pop();
+        }
+        return res;
+        
+    }
+    void dfs(TreeNode* root, map<int, int>&m)
+    {
+        if(root==NULL) return;
+        m[root->val]++;
+        dfs(root->left, m);
+        dfs(root->right, m);
+    }
+};
+
+
+//O(1) Space solution
 class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
@@ -78,4 +108,5 @@ public:
         helper(root->right, result, prev, cur, max);
     }
 };
+
 

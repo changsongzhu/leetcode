@@ -18,8 +18,9 @@ Note:
 class Solution {
 public:
     vector<string> wordsAbbreviation(vector<string>& dict) {
-        vector<string> res;
-        if(dict.size()==0) return res;
+        
+        if(dict.size()==0) return {};
+        vector<string> res(dict.size(),"");
         vector<int> pre(dict.size(), 1);
         for(int i=0;i<dict.size();i++)
             res[i]=abbreviation(dict[i], pre[i]);
@@ -38,7 +39,7 @@ public:
                     res[a]=abbreviation(dict[a], ++pre[a]);
             }
         }
-        returnr res;
+        return res;
         
     }
     string abbreviation(string s, int k)
@@ -46,7 +47,6 @@ public:
         return (k>=s.size()-2)?s:s.substr(0, k)+to_string(s.size()-k-1)+s.back();
     }
 };
-
 
 
 

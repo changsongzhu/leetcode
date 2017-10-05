@@ -22,6 +22,25 @@ Output: The root of a Greater Tree like this:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+//Recursive Solution
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        int sum=0;
+        helper(root, sum);
+        return root;
+    }
+    void helper(TreeNode *root, int &sum)
+    {
+        if(root==NULL) return;
+        helper(root->right, sum);
+        sum+=root->val;
+        root->val=sum;
+        helper(root->left, sum);
+    }
+};
+
 class Solution {
 public:
     TreeNode* convertBST(TreeNode* root) {

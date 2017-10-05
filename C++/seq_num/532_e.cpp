@@ -22,6 +22,29 @@ The length of the array won't exceed 10,000.
 All the integers in the given input belong to the range: [-1e7, 1e7].
 
 **/
+//No Sort solution
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        if(nums.size()<2) return 0;
+        map<int, int> m;
+        for(auto n:nums)m[n]++;
+        int res=0;
+        for(auto a:m)
+        {
+            //int tmp=res;
+            if(k==0&&a.second>1)res++;
+            else if(k>0)
+            {
+                if(m.count(a.first+k)) res++;
+                if(m.count(a.first-k)) res++;
+            }
+            //if(res!=tmp) m.erase(a.first);         
+        }
+        return k==0?res:res/2;
+    }
+};
+
 class Solution {
 public:
     int findPairs(vector<int>& nums, int k) {

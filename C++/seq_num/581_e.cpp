@@ -11,6 +11,29 @@ Note:
 Then length of the input array is in range [1, 10,000].
 The input array may contain duplicates, so ascending order here means <=.
 **/
+//Refined Solution
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        if(nums.size()==0)return 0;
+        int left=-1, right=-1;
+        int mn=INT_MAX, mx=INT_MIN;
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+            left=(nums[i]>mn)?i:left;
+            mn=min(mn, nums[i]);
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            right=(nums[i]<mx)?i:right;
+            mx=max(nums[i], mx);
+        }
+        return (left!=-1&&right!=-1)?right-left+1:0;
+        
+    }
+};
+
+
 class Solution {
 public:
     int findUnsortedSubarray(vector<int>& nums) {

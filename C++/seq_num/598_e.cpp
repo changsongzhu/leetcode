@@ -42,7 +42,7 @@ public:
            r_mn=min(r_mn, ops[i][0]);
            c_mn=min(c_mn, ops[i][1]);
         }
-        return (r_mn+1)*(c_mn+1);
+        return (r_mn)*(c_mn);
     }
 };
 

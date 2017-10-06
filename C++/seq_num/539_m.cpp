@@ -20,7 +20,7 @@ public:
             auto pos=timePoints[i].find_first_of(':');
             int val= stoi(timePoints[i].substr(0, pos))*60+stoi(timePoints[i].substr(pos+1));
             if(val<12*60) time.push_back(24*60+val);
-            time_push_back(val);
+            time.push_back(val);
         }
         sort(time.begin(), time.end());
         int res=INT_MAX;

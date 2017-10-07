@@ -75,7 +75,7 @@ public:
                      int x=a.first+i,y=a.second+j;
                      if(x<0||x>=m||y<0||y>=n) continue;
                      if(board[x][y]=='M')cnt++;
-                     else if(cnt==0&&board[x][y]=='E') neighbors.push_back({x, y});
+                     else if(board[x][y]=='E') neighbors.push_back({x, y});
                   }
                }
            }

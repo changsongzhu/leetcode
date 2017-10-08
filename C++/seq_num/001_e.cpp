@@ -11,6 +11,23 @@ UPDATE (2016/2/13):
 The return format had been changed to zero-based indices. Please read the above updated description carefully.
 */
 
+//LC 6ms Solution
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> m;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(m.find(target-nums[i])!=m.end())
+            {
+                return {m[target-nums[i]], i};
+            }
+            m[nums[i]]=i;
+        }        
+    }
+};
+
+
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target){

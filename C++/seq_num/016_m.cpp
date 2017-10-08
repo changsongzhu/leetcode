@@ -5,6 +5,32 @@ For example, given array S = {-1 2 1 -4}, and target = 1.
 The sum that is closest to the target is 2. (-1 + 2 + 1 = 2). 
 **/
 
+
+//Refined Solution
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        if(nums.size()<3) return 0;
+        int res=nums[0]+nums[1]+nums[2];
+        sort(nums.begin(), nums.end());
+        for(int k=0;k<nums.size()-2;k++)
+        {
+            if(k!=0&&nums[k]==nums[k-1]) continue;
+            int i=k+1,j=nums.size()-1;
+            while(i<j)
+            {
+                int sums=nums[i]+nums[j]+nums[k];
+                if(sums==target) return sums;
+                res=(abs(sums-target)<abs(res-target)?sums:res);
+                if(sums>target)--j;
+                else ++i;
+            }
+        }
+        return res;
+   }
+};
+
+
 class Solution {
 public:
     int threeSumClosest(vector<int>& nums, int target) {

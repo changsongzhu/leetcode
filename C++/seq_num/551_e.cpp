@@ -14,6 +14,34 @@ Example 2:
 Input: "PPALLL"
 Output: False
 **/
+
+class Solution {
+public:
+    bool checkRecord(string s) {
+        int absent_cnt=0;
+        int late_cnt=0;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='A')
+            {
+                absent_cnt++;
+                late_cnt=0;
+                if(absent_cnt>1) return false;
+            }
+            else if(s[i]=='L')
+            {
+                late_cnt++;
+                if(late_cnt>=3) return false;
+            }
+            else
+            {
+                late_cnt=0;
+            }
+        }
+        return true;
+    }
+};
+
  
  class Solution {
 public:

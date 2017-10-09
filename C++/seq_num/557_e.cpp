@@ -9,6 +9,30 @@ Note: In the string, each word is separated by single space and there will not b
 class Solution {
 public:
     string reverseWords(string s) {
+    if(s.size()==0) return "";
+    s.push_back(' ');
+    int start=0;
+    for(int i=0;i<s.size();i++)
+    {
+        if(s[i]==' ')
+        {
+            int right=i-1;
+            while(start<right)
+                swap(s[start++], s[right--]);
+            start=i+1;
+        }
+    }
+    s.resize(s.size()-1);
+    return s;
+
+    }
+
+
+};
+
+class Solution {
+public:
+    string reverseWords(string s) {
         if(s.size()==0) return "";
         int start=0;
         for(int i=0;i<s.size();i++)

@@ -16,12 +16,7 @@ public:
         int index=0;
         for(int i=0;i<nums.size();i++)
         {
-            if(m.find(nums[i])==m.end())
-            {
-                nums[index++]=nums[i];
-                m[nums[i]]++;
-            }
-            else if(m[nums[i]]<2)
+            if(m.find(nums[i])==m.end()||m[nums[i]]<2)
             {
                 nums[index++]=nums[i];
                 m[nums[i]]++;

@@ -19,6 +19,31 @@ Output: True
  
 Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
 **/
+
+//Refined Solution
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        if(s.size()<2) return false;
+        int m=s.size();
+        for(int i=1;i<=m/2;i++)
+        {
+            if(m%i==0)
+            {
+                int start=0;
+                while(start<m)
+                {
+                    if(s.substr(0, i)!=s.substr(start, i)) break;
+                    start+=i;
+                }
+                if(start>=m) return true;
+            }
+        }
+        return false;
+        
+    }
+};
+
  
 class Solution {
 public:

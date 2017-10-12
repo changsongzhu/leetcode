@@ -50,6 +50,39 @@ The range of tree node value is in the range of [-100000, 100000].
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+//Refined Solution
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool checkEqualTree(TreeNode* root) {
+        map<int, int> m;
+        int total=sum(root, m);
+        if(total&1) return false;
+        if(total==0) return m[total]>1;
+        return m.count(total/2)!=0;
+        
+    }
+    int sum(TreeNode *root, map<int, int> &m)
+    {
+        if(root==NULL) return 0;
+        int left=sum(root->left, m);
+        int right=sum(root->right, m);
+        m[left+right+root->val]++;
+        return left+right+root->val;
+        
+    }
+};
+
+
 class Solution {
 public:
     bool checkEqualTree(TreeNode* root) {

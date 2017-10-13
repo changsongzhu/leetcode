@@ -29,7 +29,8 @@ public:
             TreeNode *cur=new TreeNode(stoi(s));
             return cur;
         }
-        int val=stoi(s.substr(0, found);
+        int val=stoi(s.substr(0, found));
+        TreeNode *cur=new TreeNode(val);
         int start=found,cnt=0;
         for(int i=start;i<s.size();i++)
         {
@@ -37,16 +38,15 @@ public:
             else if(s[i]==')') cnt--;
             if(cnt==0&&start==found)
             {
-                cur->left=str2Tree(s.substr(start+1, i-start-1);
+                cur->left=str2tree(s.substr(start+1, i-start-1));
                 start=i+1;
             }
             else if(cnt==0)
             {
-                cur->right=str2Tree(s.substr(start+1, i-start-1);
+                cur->right=str2tree(s.substr(start+1, i-start-1));
             }
         }
         return cur;
     }
     
 };
-

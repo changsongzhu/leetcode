@@ -49,22 +49,23 @@ public:
     vector<int> boundaryOfBinaryTree(TreeNode* root) {
         if(root==NULL) return {};
         vector<int> res;
-        if(root->left||root->right) res.push_back(root->val);
+        res.push_back(root->val);
         leftBoundary(root->left, res);
-        leaves(root, res);
+        leaves(root->left, res);
+        leaves(root->right, res);
         rightBoundary(root->right, res);
         return res;
     }
     void leftBoundary(TreeNode *root, vector<int>&res)
     {
-        if(!root||(!root->left&&!root->right) return;
+        if(!root||(!root->left&&!root->right)) return;
         res.push_back(root->val);
         if(root->left)leftBoundary(root->left, res);
         else leftBoundary(root->right, res);
     }
     void rightBoundary(TreeNode *root, vector<int>&res)
     {
-        if(!root||(!root->left&&!root->right) return;
+        if(!root||(!root->left&&!root->right)) return;
         if(root->right) rightBoundary(root->right, res);
         else rightBoundary(root->left, res);
         res.push_back(root->val);
@@ -77,4 +78,3 @@ public:
         leaves(root->right, res);
     }
 };
-

@@ -15,6 +15,7 @@ public:
         int res=0;
         for(auto a:nestedList)
             res +=getSum(a, 1);
+        return res;
     }
 
     int getSum(NestedInteger ni, int level)

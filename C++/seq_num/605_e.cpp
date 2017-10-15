@@ -14,6 +14,29 @@ The input array won't violate no-adjacent-flowers rule.
 The input array size is in the range of [1, 20000].
 n is a non-negative integer which won't exceed the input array size.
 **/
+//Refined Solution
+class Solution {
+public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        int prev=0;
+        int cnt=0;
+        for(int i=0;i<flowerbed.size();i++)
+        {
+            if((i!=flowerbed.size()-1&&flowerbed[i]==0&&prev==0&&flowerbed[i+1]==0)||
+               (i==flowerbed.size()-1&&flowerbed[i]==0&&prev==0))
+            {
+                cnt++;
+                prev=1;
+            }
+            else
+            {
+                prev=flowerbed[i];
+            }    
+        }
+        return cnt>=n;
+    }
+};
+
 
 class Solution {
 public:

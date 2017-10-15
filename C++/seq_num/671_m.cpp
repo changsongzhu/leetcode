@@ -34,6 +34,31 @@ Explanation: The smallest value is 2, but there isn't any second smallest value.
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+
+//Set Solution
+class Solution {
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        set<int> s;
+        helper(root, s);
+        int k=*(s.begin());
+        while(!s.empty()&&k==*(s.begin()))
+        {
+            s.erase(s.begin());
+        }
+        return s.empty()?-1:*(s.begin());
+    }
+    void helper(TreeNode *root, set<int> &s)
+    {
+        if(root==NULL)return;
+        s.insert(root->val);
+        helper(root->left, s);
+        helper(root->right, s);
+    }
+};
+
+
 class Solution {
 public:
     int findSecondMinimumValue(TreeNode* root) {

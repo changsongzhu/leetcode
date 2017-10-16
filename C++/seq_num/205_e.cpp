@@ -12,6 +12,40 @@ You may assume both s and t have the same length.
 
 **/
 
+//Refined Solution
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        if(s.size()==0) return true;
+        map<int, int> m1;
+        map<int, int> m2;
+        string s_key="";
+        string t_key="";
+        for(int i=0;i<s.size();i++)
+        {
+            if(m1.count(s[i])==0) 
+            {
+                m1[s[i]]=i;
+                s_key.append(1, '*');
+            }
+            else
+            {
+                s_key+=to_string(m1[s[i]]);
+            }
+            if(m2.count(t[i])==0) 
+            {
+                m2[t[i]]=i;
+                t_key.append(1, '*');
+            }
+            else
+            {
+                t_key+=to_string(m2[t[i]]);
+            }
+        }
+        return s_key==t_key;
+    }
+};
+
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {

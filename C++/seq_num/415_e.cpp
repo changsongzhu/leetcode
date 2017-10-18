@@ -7,6 +7,28 @@ Both num1 and num2 contains only digits 0-9.
 Both num1 and num2 does not contain any leading zero.
 You must not use any built-in BigInteger library or convert the inputs to integer directly.
 **/
+class Solution {
+public:
+   string addStrings(string num1, string num2) {
+       string res;
+       int m=num1.size(), n=num2.size();
+       int carry=0;
+       int i=m-1,j=n-1;
+       while(i>=0||j>=0)
+       {
+           int val1=i>=0?num1[i--]-'0':0;
+           int val2=j>=0?num2[j--]-'0':0;
+           int sum=val1+val2+carry;
+           carry=sum/10;
+           sum=sum%10;
+           res=to_string(sum)+res;
+       }
+       if(carry) res=to_string(carry)+res;
+       return res;
+
+   }
+};
+
 
 class Solution {
 public:

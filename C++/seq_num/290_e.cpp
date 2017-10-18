@@ -13,6 +13,23 @@ You may assume pattern contains only lowercase letters, and str contains lowerca
 **/
 
 //istringstream solution
+class Solution{
+public:
+    bool wordPattern(string pattern, string str) {
+        map<char, int>   p2i;
+        map<string, int> w2i;
+        istringstream is(str);
+        int i=0;
+        for(string word;is>>word;i++)
+        {
+            if(i==pattern.size()||p2i[pattern[i]]!=w2i[word]) return false;
+            p2i[pattern[i]]=w2i[word]=i+1;//Trick to diffirentiate with the none existing case
+        }
+        return i==n;
+
+    }
+};
+
 class Solution {
 public:
     bool wordPattern(string pattern, string str) {

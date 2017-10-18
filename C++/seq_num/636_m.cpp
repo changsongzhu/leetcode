@@ -26,6 +26,45 @@ Functions could be called recursively, and will always end.
 1 <= n <= 100
 **/
 
+struct LOG{
+    int id;
+    string status;
+    int timestamp;
+};
+
+class Solution{
+public:
+    vector<int>  exclusiveTime(int n, vector<string> &logs){
+        stack<LOG> stk;
+        vector<int> res(n, 0);
+        for(auto log:logs)
+        {
+            stringstream ss(log);
+            string id,status,  ts;
+            getline(ss, id, ':');
+            getline(ss, status, ':');
+            getline(ss, ts, ':');
+            LOG lg ={stoi(id), status, stoi(ts)};
+            if(status == "start")
+            {
+                stk.push(lg);
+            }
+            else
+            {
+                int tmp=lg.timestamp-stk.top().timestamp+1;
+                res[stk.top().id]+=tmp;
+                stk.pop();
+                if(!stk.empty())
+                {
+                    res[stk.top().id]-=tmp;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     vector<int> exclusiveTime(int n, vector<string>& logs) {

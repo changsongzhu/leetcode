@@ -14,6 +14,32 @@ Note:
 The number of given pairs will be in the range [1, 1000].
 **/
 
+//DP Solution
+class Solution {
+public:
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end(), [](vector<int> &a, vector<int> &b){return a[0]<b[0];});
+        int n=pairs.size();
+        vector<int> dp(n+1,0);
+        dp[0]=0;
+        int res=1;
+        for(int i=1;i<=n;i++)
+        {
+            dp[i]=1;
+            for(int j=1;j<i;j++)
+            {
+                if(pairs[i-1][0]>pairs[j-1][1])
+                {
+                    dp[i]=max(dp[i], dp[j]+1);
+                }
+            }
+            res=max(res, dp[i]);
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     int findLongestChain(vector<vector<int>>& pairs) {

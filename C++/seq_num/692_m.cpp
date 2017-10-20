@@ -21,6 +21,33 @@ Follow up:
 Try to solve it in O(n log k) time and O(n) extra space.
 Can you solve it in O(n) time with only O(k) extra space?
 **/
+//Refined Solution
+class Solution
+{
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        vector<string> res;
+        map<string, int> freq;
+        for(auto w:words) freq[w]++;
+        struct comp {
+          bool operator()(pair<string, int>&a, pair<string, int>&b){
+              return a.second>b.second||(a.second==b.second&&a.first<b.first);
+          }  
+        };
+        priority_queue<pair<string, int>, vector<pair<string, int> >, comp> pq;
+        for(auto f:freq)
+        {
+            pq.push({f.first, f.second});
+            if(pq.size()>k)pq.pop();
+        }
+        while(!pq.empty()){
+            res.insert(res.begin(), pq.top().first);
+            pq.pop();
+        }
+        return res;
+    }
+};
+
 
 class Solution {
 public:

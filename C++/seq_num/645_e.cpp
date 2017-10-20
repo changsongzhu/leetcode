@@ -12,6 +12,21 @@ The given array size will in the range [2, 10000].
 The given array's numbe
 rs won't have any order.
 **/
+//Refined Solution
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        for(int i=0;i<nums.size();i++)
+        {
+            while(nums[i]!=nums[nums[i]-1]) swap(nums[i], nums[nums[i]-1]);
+        }
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]!=i+1) return {nums[i], i+1};
+        }
+    }
+};
+
 
 class Solution {
 public:

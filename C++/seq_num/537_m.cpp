@@ -14,6 +14,30 @@ Note:
 The input strings will not have extra blank.
 The input strings will be given in the form of a+bi, where the integer a and b will both belong to the range of [-100, 100]. And the output should be also in this form.
 **/
+class Solution{
+public:
+    string complexNumberMultiply(string a, string b){
+        pair<int, int> A=parseComplex(a);
+        pair<int, int> B=parseComplex(b);
+        int r=A.first*B.first-A.second*B.second;
+        int c=A.first*B.second+A.second*B.first;
+        return to_string(r)+"+"+to_string(c)+"i";
+
+    }
+    pair<int, int> parseComplex(string a)
+    {
+       auto pos=a.find_first_of('+');
+         if(pos==string::npos)
+        {
+            return {stoi(a), 0};
+        }
+        else
+        {
+            return {stoi(a.substr(0, pos)), stoi(a.substr(pos+1, a.size()-pos-2))};
+        }
+    }
+
+};
 
 
 class Solution {

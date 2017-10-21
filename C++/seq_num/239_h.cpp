@@ -15,6 +15,33 @@ Therefore, return the max sliding window as [3,3,5,5,6,7].
 Note: 
 You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-empty array.
 **/
+//Priority_queue
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        if(nums.size()==0) return {};
+        vector<int> res;
+        struct comp{
+            bool operator()(pair<int, int> &a, pair<int, int> &b){
+                return a.first<b.first;
+            }
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int> >, comp> pq;
+        int left=0;
+        for(int i=0;i<k&&i<nums.size();i++) pq.push({nums[i], i});
+        res.push_back(pq.top().first);
+        for(int i=k;i<nums.size();i++)
+        {
+            pq.push({nums[i], i});
+            while(!pq.empty()&&pq.top().second<=left)pq.pop();
+            res.push_back(pq.top().first);
+            left++;
+        }
+        return res;
+        
+    }
+};
+
 
 class Solution {
 public:

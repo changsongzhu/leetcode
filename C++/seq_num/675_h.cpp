@@ -41,6 +41,70 @@ Explanation: You started from the point (0,0) and you can cut off the tree in (0
 Hint: size of the given matrix will not exceed 50x50.
 **/
 
+//BFS+priority_queue
+class Solution {
+public:
+    int cutOffTree(vector<vector<int>>& forest) {
+        if(forest.size()==0) return -1;
+        struct comp{
+            bool operator()(pair<int, int> &a, pair<int, int> &b){
+                return a.first>b.first;
+            }
+        };
+        priority_queue<pair<int, int>, vector<pair<int,int> >, comp> pq;
+        for(int i=0;i<forest.size();i++)
+        {
+            for(int j=0;j<forest[i].size();j++)
+            {
+                if(forest[i][j]>1)
+                    pq.push({forest[i][j], i<<16|j});
+            }
+        }
+        
+        int sx=0,sy=0;
+        int res=0;
+        //map<int, int> dist;
+        while(!pq.empty())
+        {
+            auto t=pq.top();pq.pop();
+            int ex=((t.second>>16)&0xFFFF), ey=(t.second&0xFFFF);
+            int d=distance(forest, sx, sy, ex, ey);
+            if(d==-1) return -1;
+            else res+=d;
+            sx=ex;
+            sy=ey;
+        }
+        return res;
+    }
+
+    int distance(vector<vector<int> >&f, int sx, int sy, int ex, int ey)
+    {
+        if(sx==ex&&sy==ey) return 0;
+        int m=f.size(), n=f[0].size();
+        vector<vector<bool> > visited(m, vector<bool>(n, false));
+        queue<pair<int, int> > q;
+        q.push({(sx<<16)|sy, 0});
+        vector<pair<int, int> > dir={{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        visited[sx][sy]=true;
+        while(!q.empty())
+        {
+                int val=q.front().first, level=q.front().second;
+                q.pop();
+                int r=val>>16, c=val&0xFFFF;
+                for(int i=0;i<4;i++)
+                {
+                    int x=r+dir[i].first,y=c+dir[i].second;
+                    if(x<0||x>=m||y<0||y>=n||visited[x][y]==true||f[x][y]==0) continue;
+                    if(x==ex&&y==ey) return level+1;
+                    visited[x][y]=true;
+                    q.push({x<<16|y, level+1});
+                }  
+        }  
+        return -1;
+    }  
+};
+
+
 class Solution {
 public:
     int cutOffTree(vector<vector<int>>& forest) {

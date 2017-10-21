@@ -32,16 +32,13 @@ public:
         int res=0;
         for(auto a:m)
         {
-            //int tmp=res;
             if(k==0&&a.second>1)res++;
             else if(k>0)
             {
                 if(m.count(a.first+k)) res++;
-                if(m.count(a.first-k)) res++;
             }
-            //if(res!=tmp) m.erase(a.first);         
         }
-        return k==0?res:res/2;
+        return k==0?res:res;
     }
 };
 

@@ -4,6 +4,27 @@
 Count the number of prime numbers less than a non-negative number, n.
 **/
 
+
+//Refined Solution
+class Solution {
+public:
+    int countPrimes(int n) {
+        if(
+        vector<bool> dp(n, true);
+        dp[0]=dp[1]=false;
+        for(int i=2;i<n;i++)
+        {
+            if(dp[i]==true)
+            {
+                for(int j=2;j*i<n;j++)
+                   dp[i*j]=false;
+            }
+        }
+        return count(dp.begin(), dp.end(), true);
+    }
+};
+
+
 class Solution {
 public:
     int countPrimes(int n) {

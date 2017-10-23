@@ -8,7 +8,31 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 **/
 
-//Using priority_queue Solution
+//Priority Queue: Space Complexity O(K)
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        struct comp{
+          bool operator()(int a, int b)
+          {
+              return a>b;
+          }
+        };
+        priority_queue<int, vector<int>, comp> q;
+        for(int i=0;i<nums.size();i++)
+        {
+            q.push(nums[i]);
+            if(q.size()>k)
+            {
+                q.pop();
+            }
+        }
+        return q.top();
+    }
+};
+
+
+//Using priority_queue Solution : Space Complexity O(N)
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {

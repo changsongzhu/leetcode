@@ -17,6 +17,16 @@ Explanation: You can't get a non-decreasing array by modify at most one element.
 Note: The n belongs to [1, 10,000].
 **/
 
+/*
+Explanation:
+
+Case 1: A>B<C<D:   For C, prev value should be B (min(A, B))
+Case 2: A<B>C<D:   For D, prev value has two cases:
+		  if(A>C) prev value is B
+                  if(A<C) prev value is C
+*/
+
+
 class Solution {
 public:
     bool checkPossibility(vector<int>& nums) {
@@ -28,6 +38,7 @@ public:
             if(nums[i]<prev)
             {
                 cnt++;
+                if(cnt>=2) return false;
                 prev=(i!=1)?(nums[i]<nums[i-2]?nums[i-1]:nums[i]):nums[i];
             }
             else

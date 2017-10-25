@@ -12,6 +12,39 @@ The number of tasks is in the range [1, 10000].
 The integer n is in the range [0, 100].
 **/
 
+//Priority Queue + Greedy
+class Solution{
+public:
+    int leastInterval(vector<char>&tasks, int n){
+        if(n==0) return tasks.size();
+        map<char, int> m;
+        for(auto t:tasks) m[t]++;
+        priority_queue<pair<int, int> > pq;
+        for(auto a:m) pq.push({a.second, a.first});
+        int res=0;
+        while(!pq.empty())
+        {
+            vector<pair<int, int>  > tmp;
+            int cnt=0;
+            for(int i=0;i<=n;i++)
+            {
+                if(!pq.empty()) {
+                    tmp.push_back(pq.top());
+                    pq.pop();
+                    cnt++;
+                } 
+            }
+            for(auto t:tmp){
+                if(--t.first)
+                    pq.push(t);
+            }
+            res+=pq.empty()?cnt:n+1;
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
         int leastInterval(vector<char>& tasks, int n) {

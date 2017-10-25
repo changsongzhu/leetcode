@@ -18,6 +18,30 @@ Note:
 2.     Elements in the given array will be in range [-1,000,000, 1,000,000].
 **/
 
+class Solution{
+public:
+    bool splitArray(vector<int>& nums) {
+        if(nums.size()<7) return false;
+        vector<int> sums(nums.size(), 0);
+        sums[0]=nums[0];
+        for(int i=1;i<nums.size();i++) sums[i]=sums[i-1]+nums[i];
+        for(int j=3;j<nums.size()-3;j++)
+        {
+            set<int> s;
+            for(int i=1;i<j-1;i++)
+            {
+                if(sums[j-1]-sums[i]==sums[i-1]) s.insert(sums[i-1]);
+            }
+            for(int k=j+1;k<nums.size()-1;k++)
+            {
+                if(sums[k-1]-sums[j]==sums[nums.size()-1]-sums[k]&&s.count(sums[k-1]-sums[j])!=0) return true;
+            }
+        }
+        return false;
+    }
+};
+
+
 class Solution {
 public:
     bool splitArray(vector<int>& nums) {

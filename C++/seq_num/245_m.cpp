@@ -12,6 +12,24 @@ Note:
 You may assume word1 and word2 are both in the list.
 **/
 
+//Refined Solution
+class Solution {
+public:
+    int shortestWordDistance(vector<string>& words, string word1, string word2) {
+     int index_1=-1, index_2=-1;
+     int res=INT_MAX;
+     for(int i=0;i<words.size();i++)
+     {
+         if(words[i]==word1) index_1=(word1==word2)?index_2:i;
+         if(words[i]==word2) index_2=i;
+         if(index_1!=-1&&index_2!=-1)
+             res=min(res, abs(index_1-index_2));
+     }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     int shortestWordDistance(vector<string>& words, string word1, string word2) {

@@ -29,6 +29,37 @@ Note:
 1.     The range of width and height of the input 2D array is [1,200].
 **/
 
+class Solution{
+public:
+    int findBlackPixel(vector<vector<char> > &picture, int N){
+        if(picture.size()==0||picture[0].size()==0) return 0;
+        int m=picture.size(), n=picture[0].size();
+        vector<int> col(n, 0);
+        vector<int> row(m, 0);
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(picture[i][j]=='B')
+                {
+                    row[i]++;
+                    col[j]++;
+                }
+            }
+        }
+        int res=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(picture[i][j]=='B'&&row[i]==N&&col[j]==N) res++;
+            }
+        }
+        return res;
+    }
+
+};
+
 class Solution {
 public:
     int findBlackPixel(vector<vector<char>>& picture, int N) {

@@ -15,6 +15,34 @@ The length of the given array won't exceed 1000.
 The integers in the given array are in the range of [0, 1000].
 **/
 
+
+//Binary Search
+class Solution{
+public:
+    int triangleNumber(vector<int> &nums) {
+        if(nums.size()<3) return 0;
+        int res=0;
+        sort(nums.begin(), nums.end());
+        //nums[i] as the third edge
+        for(int i=nums.size()-1;i>=2;i--)
+        {
+            int left=0, right=i-1;
+            while(left<right)
+            {
+                 if(nums[left]+nums[right]>nums[i])
+                 {
+                     res+=right-left;
+                     right--;
+                 }
+                 else
+                     left++;
+            }
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     int triangleNumber(vector<int>& nums) {

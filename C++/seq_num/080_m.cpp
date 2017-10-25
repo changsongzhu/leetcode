@@ -8,6 +8,23 @@ Given sorted array nums = [1,1,1,2,2,3],
 Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
 **/
 
+//O(1) Space Complexity
+class Solution{
+public:
+    int removeDuplicates(vector<int> &nums){
+        int index=0;
+        for(int i=0;i<nums.size();)
+        {
+            int j=i;
+            while(j<nums.size()&&nums[j]==nums[i]) j++;
+            int cnt=(j-i>2?2:j-i);
+            for(int k=0;k<cnt;k++) nums[index++]=nums[i];
+            i=j;
+        }
+        return index;
+    }
+};
+
 //Refined Solution
 class Solution {
 public:

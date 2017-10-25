@@ -16,7 +16,41 @@ Explanation: No swap.
 Note:
 The given number is in the range [0, 108]
 **/
- 
+
+//DP solution: Time Complexity: O(N)
+class Solution{
+public:
+    int maximumSwap(int num)
+    {
+         string str=to_string(num);
+         int n=str.size();
+         vector<int>  dp(n, -1);
+         int max_pos=n-1;
+         for(int i=n-1;i>=0;i--)
+         {
+             if(str[i]>str[max_pos])
+             {
+                 max_pos=i;
+             }
+             
+             dp[i]=max_pos;
+            
+         }
+         for(int i=0;i<n;i++)
+         {
+             if(str[dp[i]]!=str[i])
+             {
+                 swap(str[i], str[dp[i]]);
+                 break;
+             }
+         }
+         return stoi(str);
+    }
+};
+
+
+
+//Brute Force Soltuion: Time Complexity: O(N2)
 class Solution {
 public:
     int maximumSwap(int num) {

@@ -35,14 +35,15 @@ public:
             s.insert(flowers[i]);
             if(s.size()>1)
             {
-                int prev=-1;
-                for(auto a:s)
+                auto it=s.find(flowers[i]);
+                if(it!=s.begin())
                 {
-                    if(prev!=-1)
-                    {
-                        if(a-prev==k+1) return i+1;
-                    }
-                    prev=a;
+                    if(flowers[i]-*(--it)==k+1) return i+1;
+                    it++;
+                }
+                if(it!=s.end())
+                {
+                    if(*(++it)-flowers[i]==k+1) return i+1;
                 }
             }       
         }

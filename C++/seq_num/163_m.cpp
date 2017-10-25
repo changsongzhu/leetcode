@@ -3,6 +3,32 @@
 Given a sorted integer array where the range of elements are [0, 99] inclusive, return its missing ranges.
 For example, given [0, 1, 3, 50, 75], return [“2”, “4->49”, “51->74”, “76->99”]
 **/
+
+class Solution{
+public:
+    vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
+    {
+        vector<string> res;
+        int next=lower;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]<next) continue;
+            if(nums[i]==next){next++;continue;}
+            nums[i]-1!=next?res.push_back(to_string(next)+"->"+to_string(nums[i]-1))
+                           :res.push_back(to_string(next);
+            next=(long long)nums[i]+1;
+        }
+        if(next<=upper)
+        {
+            next==upper?res.push_back(to_string(upper))
+                       :res.push_back(to_string(next)+"->"+to_string(upper));
+        }
+        return res;
+    }
+};
+
+
+
 #include <stddef.h>
 #include <iostream>
 #include <string>

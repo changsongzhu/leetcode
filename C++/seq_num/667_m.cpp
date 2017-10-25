@@ -19,6 +19,25 @@ Note:
 The n and k are in the range 1 <= k < n <= 104.
 **/
 
+//Refined Solution
+class Solution{
+public:
+     vector<int> constructArray(int n, int k){
+          int left=1, right=k+1;
+          vector<int> res;
+          if(k>=n) return res;
+          while(left<=right)
+          {
+               res.push_back(left++);
+               if(left<=right) res.push_back(right--);
+          }
+          for(int i=k+2;i<=n;i++)
+               res.push_back(i);
+          return res;
+     }
+};
+
+
 class Solution {
 public:
     vector<int> constructArray(int n, int k) {

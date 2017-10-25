@@ -28,71 +28,39 @@ Rule 2, the rows have black pixel at column C = 1 are row 0, row 1 and row 2. Th
 Note:
 1.     The range of width and height of the input 2D array is [1,200].
 **/
-
 class Solution{
 public:
-    int findBlackPixel(vector<vector<char> > &picture, int N){
+    int findBlackPixel(vector<vector<char> >&picture, int N){
         if(picture.size()==0||picture[0].size()==0) return 0;
         int m=picture.size(), n=picture[0].size();
-        vector<int> col(n, 0);
-        vector<int> row(m, 0);
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(picture[i][j]=='B')
-                {
-                    row[i]++;
-                    col[j]++;
+        unordered_map<int, set<int> > row;
+        unordered_map<int, set<int> > col;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(picture[i][j]=='B'){
+                    row[i].insert(j);
+                    col[j].insert(i);
                 }
             }
         }
         int res=0;
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(picture[i][j]=='B'&&row[i]==N&&col[j]==N) res++;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(picture[i][j]=='B'&&row[i].size()==N&&col[j].size()==N){
+                     bool lonely=true;
+                     for(auto r:col[j]){
+                         if(row[r]!=row[i]){
+                             lonely=false;
+                             break;
+                          }
+                     }
+                     res=(lonely==true?res+1:res);
+                }
             }
-        }
-        return res;
+         }
+         return res;
+
     }
-
 };
 
-class Solution {
-public:
-    int findBlackPixel(vector<vector<char>>& picture, int N) {
-           if(picture.size()==0||pciture[0].size()==0) return 0;
-        int m=picture.size(), n=picture[0].size();
-        vector<int> col(n, 0);
-        vector<int> row(m, 0);
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(picture[i][j]=='B')
-                   row[i]++;
-            }
-        }
-        for(int j=0;j<n;i++)
-        {
-            for(int i=0;i<m;i++)
-            {
-                if(picture[i][j]=='B')
-                   col[j]++;
-            }
-        }
-        int res=0;
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(picture[i][j]=='B'&&row[m]==N&&col[n]==N)
-                    res++;
-            }
-        }
-        return res;
-   }
-};
 

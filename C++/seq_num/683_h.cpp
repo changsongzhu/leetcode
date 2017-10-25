@@ -24,7 +24,6 @@ Note:
 The given array will be in the range [1, 20000].
 **/
  
-//TLE Solution
 class Solution {
 public:
     int kEmptySlots(vector<int>& flowers, int k) {

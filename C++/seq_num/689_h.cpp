@@ -16,6 +16,17 @@ nums[i] will be between 1 and 65535.
 k will be between 1 and floor(nums.length / 3).
 **/
 
+//DP solution with Comments
+class Solution{
+public:
+    vector<int> maxSumOfThreeSubarrays(vector<int> &nums, int k){
+    }
+};
+
+
+
+
+
 class Solution {
 public:
     vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {

@@ -8,6 +8,45 @@ s = "catsanddog",
 dict = ["cat", "cats", "and", "sand", "dog"].
 A solution is ["cats and dog", "cat sand dog"].
 **/
+
+
+
+//Recursive Solution
+class Solution{
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict){
+        for(auto w:wordDict) dict.insert(w);
+        return wordBreak(s, dict);
+    }
+    vector<string> wordBreak(string s, unordered_set<string> &dict)
+    {
+        vector<string> res;
+        if(m.count(s)) return m[s];
+        if(dict.count(s)) res.push_back(s);
+        for(int i=1;i<s.size();i++)
+        {
+            string word=s.substr(i);
+            if(dict.count(word))
+            {
+                string rem=s.substr(0, i);
+                vector<string> prev=combine(word, wordBreak(rem, dict));
+                res.insert(res.end(), prev.begin(), prev.end());
+            }
+        }
+        m[s]=res;
+        return res;
+    }
+    vector<string> combine(string word, vector<string> prev)
+    {
+         for(int i=0;i<prev.size();i++)
+             prev[i]+=" "+word;
+         return prev;
+    }
+private:
+    map<string, vector<string> > m;
+    unordered_set<string> dict;
+};
+
  
 class Solution {
 public:

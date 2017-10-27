@@ -17,6 +17,44 @@ All the input string will only include lower case letters.
 The returned elements order does not matter.
 **/
 
+//DP solution TLE
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>&words){
+        set<string> dict;
+        vector<string> res;
+        sort(words.begin(), words.end(), [](string &a, string &b){return a.size()<b.size();});
+        for(int i=0;i<words.size();i++)
+        {
+            if(canForm(words[i], dict))
+                res.push_back(words[i]);
+            dict.insert(words[i]);
+        }
+        return res;
+    }
+    bool canForm(string s, set<string> dict)
+    {
+        int n=s.size();
+        vector<bool> dp(n+1, false);
+        dp[0]=true;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(dp[j]==false) continue;
+                if(dict.count(s.substr(j, i-j)))
+                {
+                    dp[i]=true;
+                    break;
+                }
+
+            }
+        }
+        return dp[n];
+    }
+};
+
+
 class Solution {
 public:
     vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {

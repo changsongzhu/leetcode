@@ -21,6 +21,35 @@ The input will only have lower-case letters.
 class Solution {
 public:
     string replaceWords(vector<string>& dict, string sentence) {
+        istringstream is(sentence);
+        vector<string> words;
+        string tmp;
+        while(is>>tmp) words.push_back(tmp);
+        map<string, int> m;
+        for(auto w:dict)m[w]++;
+        for(int i=0;i<words.size();i++)
+        {
+            for(int j=1;j<=words.size();j++)
+            {
+                if(m.count(words[i].substr(0, j)))
+                {
+                    words[i]=words[i].substr(0, j);
+                    break;
+                }
+            }
+        }
+        string res;
+        for(auto w:words)
+            res+=w+" ";
+        res.pop_back();
+        return res;
+    }
+};
+
+
+class Solution {
+public:
+    string replaceWords(vector<string>& dict, string sentence) {
         map<string, int> m;
         for(auto w:dict)m[w]++;
         string res="";

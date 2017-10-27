@@ -15,6 +15,7 @@ Notes:
 ·       Using two pointers to scan two strings, if the characters in two strings are the same, moving two pointers forward. Otherwise, just move the pointer of the string t
 ·       After the scan, check if the s’s pointer points to the end of the string s. If so, return true, otherwise, return false
 **/
+
  
 class Solution {
 public:

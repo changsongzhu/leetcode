@@ -4,6 +4,27 @@ Given a non-negative integer n, count all numbers with unique digits, x, where 0
 Example:
 Given n = 2, return 91. (The answer should be the total numbers in the range of 0 ≤ x < 100, excluding [11,22,33,44,55,66,77,88,99])
 **/
+//DP Solution
+class Solution{
+public:
+    int countNumbersWithUniqueDigits(int n)
+    {
+        if(n>10) return 0;
+        if(n==0) return 1;
+        vector<int> dp(n+1, 0);
+        dp[1]=10;
+        int res=dp[1];
+        for(int i=2, j=9;i<=n;i++,j--)
+        {
+            dp[i]=(i==2?(dp[i-1]-1)*j:dp[i-1]*j);
+            res+=dp[i];
+        }
+        return res;
+    }
+    
+    
+};
+
  
 class Solution {
 public:

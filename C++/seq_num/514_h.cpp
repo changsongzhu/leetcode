@@ -22,6 +22,34 @@ There are only lowercase letters in both strings and might be some duplicate cha
 It's guaranteed that string key could always be spelled by rotating the string ring.
 **/
 
+
+//Refined Solution
+class Solution {
+public:
+    int findRotateSteps(string ring, string key){
+        int m=ring.size(), n=key.size();
+        vector<vector<int> > v(26);
+        vector<vector<int> > memo(m, vector<int> (n, 0));
+        for(int i=0;i<m;i++) v[ring[i]-'a'].push_back(i);
+        return dfs(ring, key, 0, 0, v, memo);
+    }
+    int dfs(string ring, string key, int ring_idx, int key_idx, vector<vector<int> >&v, vector<vector<int> >&memo)
+    {
+        if(key_idx==key.size()) return 0;
+        if(memo[ring_idx][key_idx]) return memo[ring_idx][key_idx];
+        int res=INT_MAX, n=ring.size();
+        for(auto pos:v[key[key_idx]-'a'])
+        {
+            int diff=abs(ring_idx-pos);
+            int steps=min(diff, n-diff);
+            res=min(res, steps+dfs(ring, key, pos, key_idx+1, v, memo));
+        }
+        memo[ring_idx][key_idx]=res+1;
+        return res+1;
+    }
+};
+
+
 class Solution {
 public:
     int findRotateSteps(string ring, string key) {

@@ -26,6 +26,42 @@ There are at least one 0 in the given matrix.
 The cells are adjacent in only four directions: up, down, left and right.
 **/
 
+
+//DFS Solution(TLE)
+class Solution {
+public:
+    vector<vector<int> > updateMatrix(vector<vector<int>  >&matrix)
+    {
+        int m=matrix.size(), n=matrix[0].size();
+        vector<vector<int> > dist(m, vector<int>(n, INT_MAX));
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    dist[i][j]=0;
+                    dfs(matrix, dist, i-1, j, 1);
+                    dfs(matrix, dist, i+1, j, 1);
+                    dfs(matrix, dist, i, j-1, 1);
+                    dfs(matrix, dist, i, j+1, 1);
+                }
+            }
+        }
+        return dist;
+    }
+    void dfs(vector<vector<int>  >&m, vector<vector<int> > &d, int x, int y, int dist)
+    {
+        if(x<0||x>=m.size()||y<0||y>=m[0].size()||m[x][y]==0||d[x][y]<=dist) return;
+        
+        d[x][y]=dist;
+        dfs(m, d, x-1, y, dist+1);
+        dfs(m, d, x+1, y, dist+1);
+        dfs(m, d, x, y-1, dist+1);
+        dfs(m, d, x, y+1, dist+1);
+    }
+};
+
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {

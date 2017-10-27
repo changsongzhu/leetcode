@@ -12,6 +12,41 @@ nums: [1,2,4,8]
 Result: [1,2,4,8]
 **/
 
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int> &nums){
+        int m=nums.size();
+        if(m==0) return {};
+        sort(nums.begin(), nums.end());
+        vector<int> dp(m, 1), child(m, -1);
+        int mx=1, mx_idx=0;//This is for the one element array
+        for(int i=0;i<nums.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                 if(nums[i]%nums[j]==0&&dp[i]<dp[j]+1)
+                 {
+                     dp[i]=dp[j]+1;
+                     child[i]=j;
+                     if(mx<dp[i])
+                     {
+                         mx=dp[i];
+                         mx_idx=i;
+                     }
+                 }
+            }
+        }
+        vector<int> res;
+        for(int i=0;i<mx;i++)
+        {
+            res.push_back(nums[mx_idx]);
+            mx_idx=child[mx_idx];
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
  
 class Solution {
 public:

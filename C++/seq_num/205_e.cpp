@@ -30,7 +30,7 @@ public:
             }
             else
             {
-                s_key+=to_string(m1[s[i]]);
+                s_key+="#"+to_string(m1[s[i]]);
             }
             if(m2.count(t[i])==0) 
             {
@@ -39,7 +39,7 @@ public:
             }
             else
             {
-                t_key+=to_string(m2[t[i]]);
+                t_key+="#"+to_string(m2[t[i]]);
             }
         }
         return s_key==t_key;

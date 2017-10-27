@@ -17,6 +17,42 @@ After running your function, the 2D grid should be:
   0  -1   3   4
 **/
 
+//BFS Solution
+class Solution{
+public:
+    void wallsAndGates(vector<vector<int> >&rooms)
+    {
+        if(rooms.size()==0||rooms[0].size()==0) return;
+        int m=rooms.size(), n=rooms[0].size();
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+               if(rooms[i][j]==0)
+               {
+                   queue<pair<int, int> > q;
+                   q.push({i<<16|j, 0});
+                   while(!q.empty())
+                   {
+                        vector<vector<int>  > dirs={{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+                        auto tmp=q.front();q.pop();
+                        for(int k=0;k<dirs.size();k++)
+                        {
+                            int x=(tmp.first>>16)+dirs[k][0], y=(tmp.first&0xFFFF)+dirs[k][1];
+                            if(x<0||x>=m||y<0||y>=n||rooms[x][y]==-1||rooms[x][y]<tmp.second+1) continue;
+                            rooms[x][y]=tmp.second+1;
+                            q.push({x<<16|y, rooms[x][y]});
+                        }
+                   }
+               } 
+            }
+        }
+    }
+};
+
+
+
+//DFS Solution
 class Solution {
 public:
    void wallsAndGates(vector<vector<int>>& rooms) {

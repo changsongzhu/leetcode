@@ -18,6 +18,30 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 
 **/ 
 
+//Refined Solution
+/*
+     Root         L
+     /  \   -->  / \
+
+    L    R      R   Root
+
+**/
+class Solution{
+public:
+    TreeNode *upsideDownBinaryTree(TreeNode *root)
+    {
+        if(!root||!root->left) return root;
+        TreeNode *node=upsideDownBinaryTree(root->left);
+        root->left->left=root->right;
+        root->left->right=root;
+        root->left=root->right=NULL;
+        return node;
+    }
+
+};
+
+
+
 class Solution {
 public:
     TreeNode *upsideDownBinaryTree(TreeNode *root) {

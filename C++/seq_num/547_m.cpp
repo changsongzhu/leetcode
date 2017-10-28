@@ -23,6 +23,42 @@ N is in range [1,200].
 M[i][i] = 1 for all students.
 If M[i][j] = 1, then M[j][i] = 1.
 **/
+//Union Find Solution
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int n=M.size();
+        int count=n;
+        vector<int> parent(n, -1);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(M[i][j])
+                {
+                    int x=find(parent, i);
+                    int y=find(parent, j);
+                    if(x!=y)
+                    {
+                        parent[y]=x;
+                        count--;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    int find(vector<int>&parent, int i)
+    {
+        int id=i;
+        while(parent[id]!=-1)
+        {
+            id=parent[id];
+        }
+        return id;
+    }
+};
+
 
 class Solution {
 public:

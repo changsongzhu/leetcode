@@ -29,6 +29,29 @@ How to make sure the duplicated files you find are not false positive?
 
 class Solution {
 public:
+    vector<vector<string>> findDuplicate(vector<string> &paths){
+        unordered_map<string, vector<string> > m;
+        if(path.size()==0) return {};
+        for(int i=0;i<path.size();i++){
+            int file_name_start=path[i].find_last_of(' ');
+            int cont_start=path[i].find_first_of('(');
+            string path=path[i].substr(0, file_name_start);
+            string file=path[i].substr(file_name_start+1, cont_start-file_name_start-1);
+            string content=path[i].substr(cont_start+1, path[i].size()-cont_start);
+            m[content].push_back(path+"/"+file);
+            
+        }
+        vector<vector<string>  > res;
+        for(auto a:m)
+            if(a.second.size()>1) res.push_back(a.second);
+        return res;
+    }
+
+};
+
+
+class Solution {
+public:
     vector<vector<string>> findDuplicate(vector<string>& paths) {
        map<string, vector<string> > mp;
        vector<vector<string> > res;

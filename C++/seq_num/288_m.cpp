@@ -12,6 +12,35 @@ Assume you have a dictionary and given a word, find whether its abbreviation is 
 Example: 
 Given dictionary = [ "deer", "door", "cake", "card" ]  isUnique("dear") -> false isUnique("cart") -> true isUnique("cane") -> false isUnique("make") -> true
 **/
+class ValidWordAbbr{
+public:
+    ValidWordAbbr(vector<string> dictionary) {
+       for(int i=0;i<dictionary.size();i++)
+       {
+           //Handle the duplicate case
+           if(dict.count(dictionary[i])) continue;
+           dict[dictionary[i]]++;
+           abbr[getAbbr(dictionary[i])]++;
+       }
+    }
+    
+    bool isUnique(string word)
+    {
+        string abr=getAbbr(word);
+        //if the word is in the dictionary and appear only ONE time, it is unique
+        if(dict.count(word)!=0&&abbr[abr]==1) return true;
+        if(abbr.count(abr)) return false;
+        else return true;
+    }
+private:
+    string getAbbr(string s)
+    {
+        return s.size()<3?s:(string(1, s[0])+to_string(s.size()-2)+string(1, s[s.size()-1]));
+    }
+    unordered_map<string, int> dict;
+    unordered_map<string, int> abbr;
+};
+
 class ValidWordAbbr {
 public:
     ValidWordAbbr(vector<string> dictionary) {

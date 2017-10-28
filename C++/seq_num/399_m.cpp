@@ -12,8 +12,53 @@ values = [2.0, 3.0],
 queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
 The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
 **/
+//Refined Solution
+class Solution {
+public:
+    vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
+        vector<double> res;
+        unordered_map<string, unordered_map<string, double> > g;
+        for(int i=0;i<equations.size();i++){
+            g[equations[i].first][equations[i].second]=values[i];
+            g[equations[i].first][equations[i].first]=1.0;
+            g[equations[i].second][equations[i].first]= 1/values[i];
+            g[equations[i].second][equations[i].second]= 1.0;
+        }
+        for(auto query:queries){
+            if(g.count(query.first)==0||g.count(query.second)==0) res.push_back(-1.0);
+            else{
+                queue<pair<string, double> >q;
+                map<string, int> used;
+                used[query.first]++;
+                q.push({query.first, g[query.first][query.first]});
+                bool found=false;
+                while(!q.empty()){
+                   auto t=q.front();q.pop();
+                   if(t.first==query.second){
+                       res.push_back(t.second);
+                       found=true;
+                       break;
+                   }
+                   else{
+                      for(auto a:g[t.first]){
+                          if(used[a.first]) continue;
+                          a.second*=t.second;
+                          q.push(a);
+                          used[a.first]++;
+                      }
+                   }
+                }
+                if(found==false) res.push_back(-1.0);
+            }
+        }
+        return res;
+    }
+};
 
-ss Solution {
+
+
+
+class Solution {
 public:
     vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
         vector<double> res;

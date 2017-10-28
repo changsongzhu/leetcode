@@ -40,30 +40,28 @@ true
 class Solution {
 public:
     bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
-       if(seqs.size()==0) return false;
-       if(org.size()==1) return org==seqs[0];
-       int n=org.size(), cnt=n-1;
-       vector<int> pos(n+1, 0), flag(n+1, 0);
-       for(int i=0;i<org.size();i++)
-       {
-          pos[org[i]]=i;
-       }
-       for(auto &seq:seqs)
-       {
-           for(int i=0;i<seq.size();i++)
-           {
-              if(seq[i]<=0||seq[i]>n) return false;
-              if(i==0) continue;
-              int pre=seq[i-1],cur=seq[i];
-              if(pos[pre]>pos[cur]) return false;
-              if(fag[cur]==0&&pos[pre]+1=pos[cur])
-              {
-                  flag[cur]=1;
-                  cnt--;
-              }
-           }
-       }
-       return cnt==0;
+        if(seqs.size()==0) return false;
+        int n=org.size();
+        int cnt=n-1;
+        vector<int> flag(n+1, 0), pos(n+1, 0);
+        for(int i=0;i<n;i++) pos[org[i]]=i;
+        bool existed=false;
+        for(auto seq:seqs)
+        {
+            for(int i=0;i<seq.size();i++)
+            {
+                existed=true;
+                if(seq[i]<=0||seq[i]>n) return false;
+                if(i==0) continue;
+                int prev=seq[i-1], cur=seq[i];
+                if(pos[prev]>=pos[cur]) return false;
+                if(flag[cur]==0&&pos[prev]+1==pos[cur])
+                {
+                    flag[cur]=1;
+                    cnt--;
+                }
+            }
+        }
+        return cnt==0&&existed==true;
     }
 };
-

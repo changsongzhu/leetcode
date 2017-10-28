@@ -12,6 +12,30 @@ Hint:
 2.     If there is a line then it should be at y = (minX + maxX) / 2.
 3.     For each point, make sure that it has a reflected point in the opposite side.
 **/
+//Refined Solution
+class Solution {
+public:
+    bool isReflected(vector<pair<int, int> > &points)
+    {
+        if(points.size()<2) return true;
+        unordered_map<int, set<int> >m;
+        int mn=INT_MAX, mx=INT_MIN;
+        for(auto p:points)
+        {
+            m[p.first].insert(p.second);
+            mn=min(mn, p.first);
+            mx=max(mx, p.first);
+        }
+        int mid=mn+mx;
+        for(auto p:points)
+        {
+            int reflect=mid-p.first;
+            if(m.count(reflect)==0||m[reflect].count(p.second)==0) return false;
+        }
+        return true;
+    }
+};
+
  
 class Solution {
 public:

@@ -26,7 +26,7 @@ class Solution {
 public:
     int longestConsecutive(TreeNode* root) {
         int res=0;
-        helper(root, res);
+        helper(root, NULL, res);
         return res;
     }
     pair<int, int> helper(TreeNode *node, TreeNode *parent, int &res)
@@ -37,13 +37,11 @@ public:
         auto right=helper(node->right,node, res);
         res = max(res, left.first+right.second+1);
         res = max(res, left.second+right.first+1);
-        if(node->val==parent->val+1)
+        if(parent!=NULL&&node->val==parent->val+1)
             inc=max(left.first,right.first)+1;
-        if(node->val+1==parent->val)
+        if(parent!=NULL&&node->val+1==parent->val)
             dec=max(left.second, right.second)+1;
         return {inc, dec};
-
-        return length;
     }
 };
 

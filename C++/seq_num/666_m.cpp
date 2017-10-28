@@ -29,6 +29,36 @@ The tree that the list represents is:
 
 The path sum is (3 + 1) = 4.
 **/
+//Refined Solution
+class Solution {
+public:
+    int pathSum(vector<int>& nums) {
+        vector<vector<int> > data(5, vector<int>(8, -1));
+        int level=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            int D=nums[i]/100;
+            int P=nums[i]%100/10;
+            int V=nums[i]%10;
+            data[D][P-1]=V;
+            level=max(level, D);
+        }
+        int res=0;
+        for(int i=1;i<=level;i++)
+        {
+            for(int j=0;j<8;j++)
+            {
+                if(data[i][j]==-1) continue;
+                if(i!=1) data[i][j]+=data[i-1][j/2];
+                if(i==level||(data[i+1][2*j]==-1&&data[i+1][2*j+1]==-1))
+                    res+=data[i][j];
+            }
+        }
+
+        return res;
+    }
+};
+
 
 class Solution {
 public:

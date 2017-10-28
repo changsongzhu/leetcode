@@ -59,6 +59,33 @@ Note: The height of binary tree is in the range of [1, 10].
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+
+//Refined Solution
+class Solution {
+public:
+    vector<vector<string> > printTree(TreeNode *root){
+        int height=depth(root);
+        int width=pow(2, row)-1;
+        vector<vector<string> >res(height, vector<string>(width, ""));
+        helper(res, 0, 0, width, root);
+        return res;
+    }
+    void helper(vector<vector<string>  >&res, int level, int left, int right, TreeNode *root)
+    {
+        if(root==NULL) return;
+        int mid=left+(right-left)/2;
+        res[level][mid]=root->val;
+        helper(res, level+1, left, mid-1, root->left);
+        helper(res, level+1, mid+1, right, root->right);
+    }
+    int depth(TreeNode *root)
+    {
+        if(root==NULL) return 0;
+        return max(depth(root->left), depth(root->right))+1;
+    }
+};
+
 class Solution {
 public:
     vector<vector<string>> printTree(TreeNode* root) {

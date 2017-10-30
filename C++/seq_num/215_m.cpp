@@ -8,6 +8,31 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 **/
 
+
+//Quick Select: Space Complexity O(1), Time Complexity O(N)
+class Solution {
+public:
+    int findKthLargest(vector<int> &nums, int k)
+    {
+         return find(nums, 0, nums.size()-1, nums.size()-k);
+    }
+    int find(vector<int>&nums, int start, int end, int k)
+    {
+         if(start>end) return INT_MAX;
+         int pivot=nums[end];
+         int left=start;
+         for(int i=start;i<end;i++)
+         {
+             if(nums[i]<=pivot) swap(nums[left++], nums[i]);
+         }
+         swap(nums[left], nums[end]);
+         if(left==k) return nums[left];
+         else if(left<k) return find(nums, left+1, end, k);
+         else return find(nums, start, left-1, k);
+    }
+};
+
+
 //Priority Queue: Space Complexity O(K)
 class Solution {
 public:

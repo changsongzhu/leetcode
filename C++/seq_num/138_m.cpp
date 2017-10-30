@@ -14,6 +14,39 @@ Return a deep copy of the list.
  */
 class Solution {
 public:
+    RandomListNode *copyRandomList(RandomListNode *head){
+        if(head==NULL) return NULL;
+        map<RandomListNode*, RandomListNode*> m;
+        RandomListNode *newHead= new RandomListNode(head->label);
+        RandomListNode *p=head;
+        RandomListNode *q=newHead;
+        m[p]=q;
+        p=p->next;
+        while(p)
+        {
+            RandomListNode *node = new RandomListNode(p->label);
+            q->next=node;
+            q=q->next;
+            m[p]=q;
+            p=p->next;
+        }
+
+        //Copy the random pointer
+        p=head;
+        q=newHead;
+        while(p)
+        {
+            if(p->random!=NULL) q->random=m[p->random];
+            p=p->next;
+            q=q->next;
+        }
+        return newHead;
+    }
+};
+
+
+class Solution {
+public:
     RandomListNode *copyRandomList(RandomListNode *head) {
         if(head==NULL) return NULL;
         RandomListNode *cur=head;

@@ -17,6 +17,26 @@ Output: 2
 Follow up:                         	
 Can you do it in O(n) time?
 **/
+class Solution {
+public:
+    int wiggleMaxLength(vector<int> &nums){
+        if(nums.size()==0) return 0;
+        vector<int> higher(nums.size(), 1);
+        vector<int> lower(nums.size(), 1);
+        for(int i=1;i<nums.size();i++)
+        {
+             for(int j=0;j<i;j++)
+             {
+                 if(nums[i]>nums[j]) higher[i]=max(higher[i], lower[j]+1);
+                 if(nums[i]<nums[j]) lower[i]=max(lower[i], higher[j]+1);
+             }
+        }
+        return max(higher.back(), lower.back());
+
+
+    }
+};
+
 
 class Solution {
 public:

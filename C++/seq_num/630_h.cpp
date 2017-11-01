@@ -15,6 +15,28 @@ Note:
 The integer 1 <= d, t, n <= 10,000.
 You can't take two courses simultaneously.
 **/
+
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int> >&courses){
+         sort(courses.begin(), courses.end(), [](vector<int> &a, vector<int> &b){return a.back()<b.back();});
+         priority_queue<int>  pq;
+         int now=0;
+         for(int i=0;i<courses.size();i++)
+         {
+             now+=courses[i][0];
+             pq.push(courses[i][0]);
+             if(now>courses[i][1])
+             {
+                  now-=pq.top();
+                  pq.pop();
+             }
+         }
+         return pq.size();
+    }
+};
+
+
 class Solution {
 public:
     int scheduleCourse(vector<vector<int>>& courses) {

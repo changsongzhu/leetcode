@@ -30,6 +30,26 @@ And in the round 2, the third senator can just announce the victory since he is 
 Note:
 The length of the given string will in the range [1, 10,000].
 **/
+class Solution {
+public:
+   string predictPartyVictory(string senate) {
+       return helper(senate, 0);
+   }
+   string helper(string &senate, int start)
+   {
+       if(senate.find_first_of('R')==string::npos) return "Dire";
+       if(senate.find_first_of('D')==string::npos) return "Radiant";
+       if(start==senate.size()) start=0;
+       char cur=(senate[start]=='R'?'D':'R');
+       int pos=senate.find_first_of(cur, start);
+       if(pos==string::npos) pos=senate.find_first_of(cur);
+       senate.erase(pos, 1);
+       if(pos>start) return helper(senate, start+1);
+       else return helper(senate, start);
+   }
+
+};
+
 
 class Solution {
 public:

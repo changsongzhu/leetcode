@@ -27,6 +27,27 @@ Note:
 Answers will be in the range of 32-bit signed integer.
 **/
 
+//Refined Solution 
+class Solution {
+public:
+   int maxA(int N){
+       if(N<=0) return 0;
+       int dp[N+1];
+       fill_n(&dp[0], N+1, 0);
+       for(int i=1;i<=N;i++)
+       {
+           dp[i]=i;
+           for(int j=0;j<i;j++)
+           {
+               if(i-j>=3) dp[i]=max(dp[i], (i-j-2)*dp[j]+dp[j]);
+               else dp[i]=max(dp[i], dp[j]+i-j);
+           }
+       }
+       return dp[N];
+   }
+};
+
+
 class Solution {
 public:
     int maxA(int N) {

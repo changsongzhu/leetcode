@@ -5,6 +5,32 @@ Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For 
 Note that 1 is typically treated as an ugly number, and n does not exceed 1690.
 **/
 
+//minHeap Solution
+class Solution {
+public:
+    int nthUglyNumber(int n){
+        priority_queue<long, vector<long>, greater<long>  > pq;
+        pq.push(1);
+        int start=0;
+        int cnt=0;
+        while(cnt<n)
+        {
+            long tmp=pq.top();pq.pop();
+            if(tmp>start)
+            {
+                pq.push(tmp*2);
+                pq.push(tmp*3);
+                pq.push(tmp*5);
+                start=tmp;
+                cnt++;
+            }
+        }
+        return start;
+    }
+};
+
+
+
 class Solution {
 public:
     int nthUglyNumber(int n) {

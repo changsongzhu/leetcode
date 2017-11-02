@@ -12,6 +12,36 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+
+//MinHeap Solution
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode*> &lists){
+        struct comp{
+            bool operator()(pair<int, ListNode*>&a, pair<int, ListNode*>&b)
+            {  return a.first>b.first;}
+        };
+        priority_queue<pair<int, ListNode*>, vector<pair<int, ListNode*>>, comp> pq;
+        ListNode dummy(-1);
+        ListNode *prev=&dummy;
+        for(int i=0;i<lists.size();i++)
+        {
+            if(lists[i]!=NULL)
+                pq.push({lists[i]->val, lists[i]});
+        }
+        while(!pq.empty())
+        {
+            auto p=pq.top();pq.pop();
+            prev->next=p.second;
+            prev=prev->next;
+            if(p.second->next!=NULL) pq.push({p.second->next->val, p.second->next});
+        }
+        return dummy.next;
+
+    }
+};
+
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {

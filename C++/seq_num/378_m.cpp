@@ -14,6 +14,33 @@ return 13.
 Note: 
 You may assume k is always valid, 1 ≤ k ≤ n2.
 **/
+
+//minHeap Solution
+class Solution {
+public:
+    int kthSmallest(vector<vector<int> >&matrix, int k) {
+        int m=matrix.size(), n=matrix[0].size();
+        struct comp{
+            bool operator()(pair<int, int>&a, pair<int, int> &b){return a.first>b.first;}
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int> >, comp> pq;
+        for(int i=0;i<m;i++)
+           pq.push({matrix[i][0], i<<16|0});
+        int cnt=0;
+        int res=0;
+        while(cnt<k)
+        {
+            auto p=pq.top();pq.pop();
+            res=p.first;
+            int row=p.second>>16, index=p.second&0xFFFF;
+            cnt++;
+            if(index!=n-1)pq.push({matrix[row][index+1], row<<16|(index+1)});
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {

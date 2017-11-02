@@ -25,6 +25,31 @@ Return: [1,3],[2,3]
 All possible pairs are returned from the sequence:
 [1,3],[2,3]
 **/
+
+
+//Maxheap Solution
+class Solution {
+public:
+    vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        int m=nums1.size(), n=nums2.size()
+        struct comp{
+           bool operator()(pair<int, int> &a, pair<int, int> &b){return a.first+a.second<b.first+b.second;}
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int> >, comp> pq;
+        for(int i=0;i<min(k,m);i++)
+        {
+             for(int j=0;j<(k, n);j++)
+             {
+                 pq.push({nums1[i], nums2[j]});
+                 if(pq.size()>k) pq.pop();
+             }
+        }
+        vector<pair<int, int> > res;
+        while(!pq.empty()){res.push_back(pq.top());pq.pop();}
+        return res;
+    }
+};
+
  
 class Solution {
 public:

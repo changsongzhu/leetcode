@@ -26,41 +26,6 @@ or
  
 7 -> 6 -> 3 -> 2 -> 1
 **/
-
-class Solution {
-public:
-    int integerReplacement(int n) {
-	int res=0;
-        while(n>1)
-        {
-            res++;
-            if(n%2==0) n=n/2;
-            else
-            {
-                if(oneBits(n-1)==1)
-                {
-                    n=n-1;
-                }
-                else
-                {
-                    n=n+1;
-                }
-            }
-        }    
-        return res; 
-    }
-    int oneBits(int n)
-    {
-       int cnt=0;
-       while(n>0)
-       {
-           cnt++;
-           n=n&(n-1);
-       }
-       return cnt;
-    }
-};
-
 class Solution{
 public:
     int integerReplacement(int n) {

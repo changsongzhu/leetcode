@@ -28,53 +28,27 @@ Note:
 The length of the input is in range of [1, 10000]
 **/
 
-#include <stdlib.h>
-#include <iostream>
-#include <vector>
-#include <string>
-
-using namespace std;
-
 class Solution {
 public:
     bool isPossible(vector<int>& nums) {
-        vector<int> sizes;
-        int len=0;
-        int start=nums[0]-1;
-        int i=0;
-        while(i<nums.size()){
-            if(nums[i]!=(start+1)){
-                sizes.push_back(1);
-                start=nums[i];
-                len=1;
-                i++;
-            }
-            else{
-                int j=len;
-                for(int m=0;j>0;j--,m++) {
-                    if(i<nums.size()&&nums[i]==(start+1)){
-                       sizes[sizes.size()-1-m]++;
-                       i++;
-                    }
-                    else
-                       break;
-                }
-                if(j>0) len=len-j;
-                else{
-                   while(i<nums.size()&&nums[i]==(start+1)) {
-                       i++; 
-                       sizes.push_back(1);
-                       len++;
-                   }
-                }
-                start=start+1;
-            }
+        unordered_map<int, priority_queue<int, vector<int>, greater<int> > > m;
+        int count=0;
+        for(auto n:nums)
+        {
+             if(!m[n-1].empty())
+             {
+                 int len=m[n-1].top();
+                 m[n-1].pop();
+                 m[n].push(len+1);
+                 if(len+1==3) count--;
+             }
+             else
+             {
+                 m[n].push(1);
+                 count++;
+             }
         }
-
-        for(int k=0;k<sizes.size();k++){
-            if(sizes[k]<3) return false;
-        }
-        return true;
+        return count==0;
+        
     }
 };
-

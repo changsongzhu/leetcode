@@ -19,6 +19,27 @@ Note:
 1 <= k <= len(nums) * (len(nums) - 1) / 2.
 
 **/
+
+
+//maxHeap Solution BUT TLE
+
+class Solution {
+public:
+    int smallestDistancePair(vector<int> &nums, int k){
+       priority_queue<pair<int, int> >pq;
+       for(int i=0;i<nums.size();i++)
+       {
+           for(int j=i+1;j<nums.size();j++)
+           {
+               pq.push({abs(nums[i]-nums[j]), i<<16|j});
+               if(pq.size()>k) pq.pop();
+           }
+       }
+       return pq.size()==k?pq.top().first:0;
+
+    }
+};
+
 class Solution {
 public:
     int smallestDistancePair(vector<int>& nums, int k) {

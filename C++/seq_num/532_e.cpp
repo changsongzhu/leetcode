@@ -38,7 +38,7 @@ public:
                 if(m.count(a.first+k)) res++;
             }
         }
-        return k==0?res:res;
+        return res;
     }
 };
 

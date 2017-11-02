@@ -21,6 +21,35 @@ You should return [1, 3, 4].
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+//BFS Solution with Queue
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode *root)
+    {
+        vector<int> res;
+        queue<pair<TreeNode *, int> > q;
+        if(root!=NULL) q.push({root, 1});
+        while(!q.empty())
+        {
+            auto a=q.front();q.pop();
+            if(res.size()<a.second)
+            {
+                res.push_back(a.first->val);
+            }
+            else
+            {
+                res[a.second-1]=a.first->val;
+            }
+            if(a.first->left) q.push({a.first->left, a.second+1});
+            if(a.first->right)q.push({a.first->right, a.second+1});
+        }
+        return res;
+    }
+};
+
+
+//DFS Solution
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {

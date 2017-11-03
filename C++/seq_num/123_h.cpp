@@ -24,11 +24,30 @@ l[i][0]   0    0    0    0   0    0    0   0
 l[i][1]   0    1    2    -1  6    5    7   8 
 l[i][2]   0    1    2    -1  8    6    8   9
 
-
-
-
-
 **/
+
+//Refined Solution
+
+
+class Solution {
+public:
+    int maxProfit(vector<int> &prices){
+     if(prices.size()==0) return 0;
+     int n=prices.size();
+     int g[3]={0}, l[3]={0};
+     for(int i=1;i<prices.size();i++)
+     {
+         int diff=prices[i]-prices[i-1];
+         for(int j=2;j>=1;j--)
+         {
+             l[j]=max(g[j-1]+max(0, diff), l[j]+diff);
+             g[j]=max(g[j], l[j]);
+         }
+     }
+     return g[2];
+    }
+};
+
 
 class Solution {
 public:

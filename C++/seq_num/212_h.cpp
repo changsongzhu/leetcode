@@ -16,70 +16,74 @@ Return ["eat","oath"].
 Note:
 You may assume that all inputs are consist of lowercase letters a-z.
 **/
-
+class TrieNode{
+    public:
+      TrieNode *child[26];
+      string word;
+      TrieNode():word(""){
+          for(auto &c:child) c=NULL;
+      }
+    };
+class Trie{
+    public:
+        TrieNode *root;
+        Trie(){
+            root=new TrieNode();
+        }
+        void add(string w)
+        {
+            TrieNode *p=root;
+            for(auto c:w)
+            {
+                if(p->child[c-'a']==NULL) p->child[c-'a']=new TrieNode();
+                p=p->child[c-'a'];
+            }
+            p->word=w;
+        }
+    };
 class Solution {
 public:
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        vector<string> res;
+        if(board.size()==0||board[0].size()==0||words.size()==0) return {};
         int m=board.size(), n=board[0].size();
-        Tire T;
-        for(auto w:words) T.insert(w);
-        vector<vector<boo> > visited(m vector<bool>(n, false));
+        Trie *T= new Trie();
+        for(auto w:words) T->add(w);
+        vector<string> res;
+        vector<vector<bool> > visited(m, vector<bool>(n, false));
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
-                if(T.root->child[board[i][j]-'a']!=NULL)
-                    dfs(board, res, i, j, T.root->child[board[i][j]-'a'], viisted);
+                int idx=board[i][j]-'a';
+                if(T->root->child[idx])
+                {
+                    helper(board, i, j, visited, T->root->child[idx], res);
+                }
+                    
             }
         }
         return res;
     }
-    void dfs(vector<vector<char> >&board, vector<string>&res, int x, int y, TireNode *p, vector<vector<bool> > &visited)
+    void helper(vector<vector<char> >&board, 
+                int x, 
+                int y, 
+                vector<vector<bool> >&visited,
+                TrieNode* root, 
+                vector<string> &res)
     {
-        if(!p->str.empty())
+        if(root->word.size()!=0)
         {
-            res.push_back(p->str);
-            p->str.clear();
+            res.push_back(root->word);
+            root->word.clear();
         }
-        vector<vector<int> > dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        visited[x][y] = true;
+        vector<vector<int> > dirs={{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        visited[x][y]=true;
         for(int i=0;i<dirs.size();i++)
         {
-            int m = x + dirs[i][0];
-            int n = y + dirs[i][1];
-            if(m>=0&&m<board.size()&&n>=0&&n<board[0].size()&&!visited[m][n]&&p->child[board[m][n] - 'a'])
-                dfs(board, res, m, n, p->child[board[m][n] - 'a'], visited);
+            int a=x+dirs[i][0], b=y+dirs[i][1];
+            if(a<0||a>=board.size()||b<0||b>=board[0].size()||visited[a][b]||root->child[board[a][b]-'a']==NULL) continue;
+            helper(board, a, b, visited, root->child[board[a][b]-'a'], res);
         }
-        visited[x][y] = false;
+        visited[x][y]=false;
     }
-    
-private:
-    struct TireNode
-    {
-        TireNode *child[26];
-        string str;
-        TireNode():str("")
-        {
-            for(auto &c:child)c=NULL;
-        }
-    };
-    struct Tire
-    {
-        TireNode *root;
-        Tire():root(NULL) {}
-        void insert(string word)
-        {
-            TireNode *p=root;
-            for(auto w:word)
-            {
-                int i=w-'a';
-                if(p->child[i]==NULL) p->child[i]=new TireNode();
-                p=p->child[i];
-            }
-            p->str=word;
-        }
-    };
-    
 };
-

@@ -17,6 +17,22 @@ For example:
 52  -> AZ  2
 78  -> BZ  3
 **/
+
+
+//Refined Solution
+class Solution {
+public:
+    string convertToTitle(int n){
+         string res="";
+         while(n>0)
+         {
+              res.insert(res.begin(), --n%26+'A');
+              n=n/26;
+         }
+         return res;
+    }
+};
+
 class Solution {
 public:
     string convertToTitle(int n) {

@@ -11,6 +11,35 @@ find(7) -> false
 
 **/
 
+//Right Solution : unordered_multiset
+class TwoSum {
+public:
+    /** Initialize your data structure here. */
+    TwoSum() {
+        
+    }
+    
+    /** Add the number to an internal data structure.. */
+    void add(int number) {
+        nums.insert(number);
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    bool find(int value) {
+        for(auto n:nums)
+        {
+            int count=(n==value-n?2:1);
+            if(nums.count(value-n)>=count) return true;
+        }
+        return false;
+    }
+
+private:
+    unordered_multiset<int> nums;
+};
+
+
+//TLE Solution
 class Solution
 {
 public:

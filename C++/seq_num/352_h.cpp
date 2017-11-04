@@ -20,6 +20,59 @@ What if there are lots of merges and the number of disjoint intervals are small 
  *     Interval(int s, int e) : start(s), end(e) {}
  * };
  */
+
+//Similar solution for insert Interval (LC052)
+class SummaryRanges {
+public:
+    /** Initialize your data structure here. */
+    SummaryRanges() {
+        
+    }
+    
+    void addNum(int val) {
+        Interval cur(val, val);
+        vector<Interval> res;
+        bool insert=false;
+        for(auto a:intervals)
+        {
+            if(insert==false)
+            {
+                if(cur.end+1<a.start)
+                {
+                    res.push_back(cur);
+                    res.push_back(a);
+                    insert=true;
+                }
+                else if(a.end+1<cur.start)
+                {
+                    res.push_back(a);
+                }
+                else
+                {
+                    cur.start=min(cur.start, a.start);
+                    cur.end=max(cur.end, a.end);
+                }
+            }
+            else
+            {
+                res.push_back(a);
+            }
+        }
+        if(insert==false)
+        {
+            res.push_back(cur);
+        }
+        intervals=move(res);      
+    }
+    
+    vector<Interval> getIntervals() {
+        return intervals;
+    }
+private:
+    vector<Interval> intervals;
+};
+
+
 class SummaryRanges {
 public:
     /** Initialize your data structure here. */

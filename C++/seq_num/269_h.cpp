@@ -17,6 +17,57 @@ Note:
 2.     If the order is invalid, return an empty string.
 3.     There may be multiple valid order of letters, return any one of them is fine.
 **/
+//Refined Solution
+class Solution {
+public:
+   string alienOrder(vector<string>& words) {
+       vector<vector<bool> > graph(26, vector<bool>(26, false));
+       vector<bool> visited(26, false);
+       for(auto w:words)
+           for(auto c:w)
+               graph[c-'a'][c-'a']=true;
+       for(int i=0;i<words.size()-1;i++)
+       {
+           int mn=min(words[i].size(), words[i+1].size()), j=0;
+           for(;j<mn;j++)
+           {
+                if(words[i][j]!=words[i+1][j])
+                {
+                     graph[words[i][j]-'a'][words[i+1][j]-'a']=true;
+                     break;
+                }
+           }
+           if(j==mn&&words[i].size()>words[i+1].size()) return "";
+       }
+       string res="";
+       for(int i=0;i<26;i++)       
+           if(helper(graph, i, visited, res)==false) return "";
+       for(int i=0;i<26;i++)
+           if(graph[i][i]==true) res+=string(1, i+'a');
+       
+       reverse(res.begin(), res.end());
+       return res;
+
+   }
+   bool helper(vector<vector<bool> >&graph, int index, vector<bool>&visited, string& res)
+   {
+       if(graph[index][index]==false) return true;
+       if(visited[index]==true) return false;
+       visited[index]=true;
+       for(int i=0;i<26;i++)
+       {
+            if(i==index||graph[index][i]==false) continue;
+            if(visited[i]==true) return false;
+            if(helper(graph, i, visited, res)==false) return false;
+       }
+       visited[index]=false;
+       graph[index][index]=false;
+       res+=string(1, index+'a');
+       return true;
+   }
+};
+
+
  
 class Solution {
 public:

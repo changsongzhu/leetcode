@@ -34,7 +34,7 @@ public:
        if(root==NULL) return 0;
        int left=dfs(res, root->left);
        int right=dfs(res, root->right);
-       int level=min(left, right)+1;
+       int level=max(left, right)+1;
        if(res.size()<level) res.push_back({root->val});
        else res[level-1].push_back(root->val);
        return level;

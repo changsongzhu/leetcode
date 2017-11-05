@@ -7,16 +7,20 @@ Note:
 You may assume that the array does not change.
 There are many calls to sumRange function.
 **/
+
 class NumArray {
 public:
     NumArray(vector<int> nums) {
-        sums.push_back(0);
-        for(int i=1;i<=nums.size();i++)
-            sums.push_back(sums[i-1]+nums[i-1]);
+        for(int i=0;i<nums.size();i++)
+        {
+            if(i==0) sums.push_back(nums[i]);
+            else sums.push_back(sums[i-1]+nums[i]);
+        }
     }
+    
     int sumRange(int i, int j) {
-        return sums[j+1]-sums[i];
-
+        if(i==0) return sums[j];
+        else return sums[j]-sums[i-1];
     }
 private:
     vector<int> sums;

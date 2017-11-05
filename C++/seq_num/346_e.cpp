@@ -19,7 +19,7 @@ public:
 
     double next(int val) 
     {
-      if(dq.size()<this->size)
+      if(q.size()<this->size)
       {
           sum+=val;
           q.push(val);
@@ -29,8 +29,8 @@ public:
       {
           sum-=q.front();
           sum+=val;
-          dq.pop();
-          dq.push(val);
+          q.pop();
+          q.push(val);
           return sum/this->size;
       }
     }

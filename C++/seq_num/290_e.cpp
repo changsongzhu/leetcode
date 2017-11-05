@@ -12,10 +12,39 @@ Notes:
 You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space.
 **/
 
+//Refined solution
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        istringstream is(str);
+        unordered_map<char, string> m1;
+        unordered_map<string,char>m2;
+        int i=0;
+        for(string word;is>>word;i++)
+        {
+            if(i==pattern.size()) return false;
+            if(m1.count(pattern[i])==0&&m2.count(word)==0)
+            {
+                m1[pattern[i]]=word;
+                m2[word]=pattern[i];
+            }
+            else
+            {
+                if(m1[pattern[i]]!=word||m2[word]!=pattern[i])
+                    return false;
+            }
+        }
+        return i==pattern.size();
+        
+    }
+};
+
+
 //istringstream solution
 class Solution{
 public:
     bool wordPattern(string pattern, string str) {
+        int n=pattern.size();
         map<char, int>   p2i;
         map<string, int> w2i;
         istringstream is(str);

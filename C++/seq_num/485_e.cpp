@@ -11,6 +11,24 @@ Note:
 The input array will only contain 0 and 1.
 The length of input array is a positive integer and will not exceed 10,000
 **/
+
+//Refined Solution
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int> &nums){
+       int res=0;
+       for(int i=0;i<nums.size();i++)
+       {
+          if(nums[i]==0) continue;
+          int j=i;
+          while(j+1<nums.size()&&nums[j+1]==1) j=j+1;
+          res=max(res, j-i+1);
+          i=j;
+       }
+       return res;
+    }
+};
+
 class Solution {
 public:
     int findMaxConsecutiveOnes(vector<int>& nums) {

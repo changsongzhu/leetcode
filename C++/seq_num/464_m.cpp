@@ -20,24 +20,23 @@ If the first player choose 1, the second player can only choose integers from 2 
 The second player will win by choosing 10 and get a total = 11, which is >= desiredTotal.
 Same with other integers chosen by the first player, the second player will always win.
 **/
- 
 class Solution {
 public:
     bool canIWin(int maxChoosableInteger, int desiredTotal) {
-        if(maxChoosableInteger>=desiredTotal) return true;
-        if(maxChoosableInteger*(maxChoosableInteger+1)/2<desiredTotal) return false;
-        unordered_map<int, bool> m;
-        return canWin(maxChoosableInteger, desiredTotal, 0, m);
+      if(maxChoosableInteger>=desiredTotal) return true;
+      if((maxChoosableInteger+1)*maxChoosableInteger/2<desiredTotal) return false;
+      unordered_map<int, bool> m;
+      return helper(maxChoosableInteger, desiredTotal, 0, m);
     }
-    bool canWin(int length, int total, int used, unordered_map<int, bool> &m)
+    bool helper(int max, int target, int used, unordered_map<int, bool> &m)
     {
         if(m.count(used)) return m[used];
-        for(int i=0;i<length;i++)
+        for(int i=1;i<=target;i++)
         {
-            int cur=1<<i;
-            if((cur&used)==0)
+            int cur=1<<(i-1);
+            if((cur|used)==0)
             {
-                if(total<=i+1||!canWin(length, total-i-1,cur|used,m))
+                if(target<=i||!helper(max, target-i, used|cur, m))
                 {
                     m[used]=true;
                     return true;
@@ -47,4 +46,4 @@ public:
         m[used]=false;
         return false;
     }
-};
+}; 

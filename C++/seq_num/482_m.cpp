@@ -21,6 +21,29 @@ String S consists only of alphanumerical characters (a-z and/or A-Z and/or 0-9) 
 String S is non-empty.
 **/
 
+
+//Refine Solution
+class Solution {
+public:
+    string licenseKeyFormatting(string S, int K){
+        string res="";
+        int cnt=K;
+        for(int i=S.size()-1;i>=0;i--)
+        {
+            if(S[i]=='-') continue;
+            if(cnt==0)
+            {
+                res.insert(res.begin(), '-');
+                cnt=K;
+            }
+            res.insert(res.begin(), toupper(S[i]));
+            cnt--;
+        }
+        return res;
+    }
+};
+
+
 //Refined Solution
 class Solution {
 public:

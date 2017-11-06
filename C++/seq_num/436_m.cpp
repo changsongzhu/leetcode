@@ -37,6 +37,33 @@ For [2,3], the interval [3,4] has minimum-"right" start point.
  *     Interval(int s, int e) : start(s), end(e) {}
  * };
  */
+
+class Solution {
+public:
+    vector<int> findRightInterval(vector<Interval>&intervals){
+        struct comp{
+            bool operator()(pair<int, int> &a, pair<int, int>&b){
+                return a.first>b.first;}
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int> >, comp> pq_start;
+        priority_queue<pair<int, int>, vector<pair<int, int> >, comp> pq_end;
+        for(int i=0;i<intervals.size();i++)
+        {
+            pq_start.push({intervals[i].start, i});
+            pq_end.push({intervals[i].end, i});
+        }
+        vector<int> res(intervals.size(), -1);
+        while(!pq_end.empty())
+        {
+            auto p=pq_end.top();pq_end.pop();
+            while(!pq_start.empty()&&(p.first>pq_start.top().first||p.second==pq_start.top().second)) pq_start.pop();
+            if(!pq_start.empty()) res[p.second]=pq_start.top().second;
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     vector<int> findRightInterval(vector<Interval>& intervals) {

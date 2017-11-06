@@ -34,7 +34,6 @@ Person #2 gave person #0 $5.
  
 Therefore, person #1 only need to give person #0 $4, and all debt is settled.
 **/
-
 class Solution {
 public:   
     int minTransfers(vector<vector<int>>& transactions) {
@@ -48,23 +47,26 @@ public:
         int cnt=0;
         for(auto it:m)
         {
+            if(it.second==0) continue;
             account[cnt++]=it.second;
         }
-        return dfs(account, 0, cnt, 0);
+        return helper(account, 0, 0);
     }
-    int dfs(vector<int> &account, int start, int n, int num)
+    int helper(vector<int> &balance, int start, int trans)
     {
         int res=INT_MAX;
-        while(start<n&&account[start]==0) start++;
+        int n=balance.size();
+        while(start<n&&balance[start]==0) start++;
         for(int i=start+1;i<n;i++)
         {
-            if((account[start]>0&&account[i]<0)||(account[start]<0&&account[i]>0))
+            if(balance[start]*balance[i]<0)
             {
-                account[i]+=account[start];
-                res=min(res, dfs(account, start+1, n, num+1));
-                account[i]-=account[start];
+                balance[i]+=balance[start];
+                res=min(res, helper(balance, start+1, trans+1));
+                 balance[i]-=balance[start];
             }
         }
-        return res==INT_MAX?num:res;
+        return res==INT_MAX?trans:res;
     }
+
 };

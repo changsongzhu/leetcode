@@ -19,6 +19,51 @@ Output: 1
 Explanation: The two heater was placed in the position 1 and 4. We need to use radius 1 standard, then all the houses can be warmed.
 **/
 
+
+//Two Scan Solution
+class Solution {
+public:
+    int findRadius(vector<int> &houses, vector<int> &heaters){
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+
+        int hNum=heaters.size();
+        vector<int> left(houses.size(), INT_MAX);
+        vector<int> right(houses.size(), INT_MAX);
+
+        //check the left heaters for each house
+        int h_idx=0;
+        int h_start=heaters[h_idx];
+        for(int i=0;i<houses.size();i++)
+        {
+            if(h_start<=houses[i])
+            {
+                while(h_idx+1<hNum&&heaters[h_idx+1]<=houses[i])h_start=heaters[++h_idx];
+                left[i]=houses[i]-h_start;
+            }
+
+        }
+       //check the right heaters for each house
+        h_idx=hNum-1;
+        h_start=heaters[h_idx];
+        for(int i=houses.size()-1;i>=0;i--)
+        {
+            if(h_start>=houses[i])
+            {
+                while(h_idx-1>=0&&heaters[h_idx-1]>=houses[i])h_start=heaters[--h_idx];
+                right[i]=h_start-houses[i];
+            }
+        } 
+        int res=INT_MIN;
+        for(int i=0;i<houses.size();i++)
+        {
+            res=max(res, min(left[i], right[i]));
+        }
+        return res;
+    }
+};
+
+
 class Solution {
 public:
     int findRadius(vector<int>& houses, vector<int>& heaters) {

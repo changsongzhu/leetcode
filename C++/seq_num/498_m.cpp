@@ -13,6 +13,48 @@ Explanation:
 Note:
 The total number of elements of the given matrix will not exceed 10,000.
 **/
+//Refined Solution
+class Solution{
+public:
+    vector<int> findDiagonalOrder(vector<vector<int> > &matrix){
+        if(matrix.size()==0||matrix[0].size()==0) return {};
+        vector<int> res;
+        int m=matrix.size(), n=matrix[0].size();
+        int cnt=0;
+        int direction=1;
+        int x=0, y=0;
+        while(cnt<m*n){
+           if(direction==1)
+           {
+               int i=x, j=y;
+               while(i>=0&&i<m&&j>=0&&j<n){
+                   res.push_back(matrix[i][j]);
+                   cnt++;
+                   i=i-1;j=j+1;
+               }
+           }
+           else
+           {
+               int i=x, j=y;
+               stack<int> stk;
+               while(i>=0&&i<m&&j>=0&&j<n){
+                   stk.push(matrix[i][j]);
+                   i=i-1;j=j+1;
+               }
+               while(!stk.empty()){
+                   res.push_back(stk.top());
+                   stk.pop();
+                   cnt++;
+               }
+           }
+           direction*=-1;
+           x<m-1?x++:y++;
+        }
+        return res;
+    }
+};
+
+
 
 class Solution {
 public:

@@ -15,6 +15,22 @@ Input: 6
 Output: 3
 Explanation: The first 6 elements of magical string S is "12211" and it contains three 1's, so return 3.
 **/
+//Refined Solution
+class Solution {
+public:
+    int magicalString(int n) {
+        if(n<=0) return 0;
+        string res="122";
+        int i=2;
+        while(res.size()<n)
+        {
+            res.append(res[i++]-'0', (res.back()-'0')^3+'0');
+        }
+        return count(res.begin(), res.begin()+n, '1');
+    }
+};
+
+
  
 class Solution {
 public:

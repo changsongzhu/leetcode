@@ -13,6 +13,27 @@ Merge two sorted linked lists and return it as a new list. The new list should b
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+//Priority_queue solution
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        priority_queue<pair<int, ListNode*>, vector<pair<int, ListNode*>>, greater<pair<int, ListNode*> > > pq;
+        if(l1) pq.push({l1->val, l1});
+        if(l2) pq.push({l2->val, l2});
+        ListNode dummy(-1);
+        ListNode *prev=&dummy;
+        while(!pq.empty())
+        {
+            auto p=pq.top();pq.pop();
+            prev->next=p.second;
+            prev=prev->next;
+            if(p.second->next!=NULL) pq.push({p.second->next->val, p.second->next});
+        }
+        return dummy.next;
+        
+    }
+};
+
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {

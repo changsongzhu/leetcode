@@ -30,6 +30,27 @@ The paths that sum to 8 are:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+
+//Refined Solution
+class Solution {
+public:
+    int pathSum(TreeNode *root, int sum)
+    {
+        if(root==NULL) return 0;
+        return sums(root, 0, sum)+pathSum(root->left, sum) + pathSum(root->right, sum);
+    }
+
+    int sums(TreeNode *root, int curSum, int sum)
+    {
+        if(root==NULL) return 0;
+        curSum+=root->val;
+        return (curSum==sum)+sums(root->left, curSum, sum)+sums(root->right, curSum, sum);
+    }
+
+};
+
+
 class Solution {
 public:
     int pathSum(TreeNode* root, int sum) {

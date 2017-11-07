@@ -56,7 +56,7 @@ class Solution {
 public:
    int wordsTyping(vector<string>& sentence, int rows, int cols) {
        string all="";
-       for(auto s:sentence) all+=a+string(" ");
+       for(auto s:sentence) all+=s+string(" ");
        int start=0,len=all.size();
        for(int i=0;i<rows;i++)
        {
@@ -69,4 +69,3 @@ public:
        return start/len;
    }
 };
-

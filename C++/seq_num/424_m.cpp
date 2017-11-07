@@ -23,7 +23,31 @@ Explanation:
 Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 The substring "BBBB" has the longest repeating letters, which is 4.
 **/
- 
+
+//Refine Solution
+class Solution {
+public:
+    int characterReplacement(string s, int k){
+        int res=0;
+        vector<int> count(26, 0);
+        int max_cnt=0;
+        int start=0;
+        for(int i=0;i<s.size();i++)
+        {
+            max_cnt=max(max_cnt, ++count[s[i]-'A']);
+            while(i-start+1-max_cnt>k)
+            {
+                --count[s[start++]-'A'];
+                for(int i=0;i<26;i++)
+                    max_cnt=max(max_cnt, count[i]);
+            }
+            res=max(res, i-start+1);
+        }
+        return res;
+    }
+}; 
+
+
 class Solution {
 public:
     int characterReplacement(string s, int k) {
@@ -34,6 +58,7 @@ public:
         for(int i=0;i<s.size();i++)
         {
            max_cnt=max(max_cnt, ++count[s[i]-'A']);
+           //always make the length - max_count<=k
            if(i-start+1-max_cnt>k)
            {
                --count[s[start]-'A'];

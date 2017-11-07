@@ -30,6 +30,24 @@ Note: The merging process must start from the root nodes of both trees.
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+//Refine Solution
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
+        if(t1==NULL&&t2==NULL) return NULL;
+        TreeNode* t1_left=(t1!=NULL)?t1->left:NULL;
+        TreeNode* t2_left=(t2!=NULL)?t2->left:NULL;
+        TreeNode* t1_right=(t1!=NULL)?t1->right:NULL;
+        TreeNode* t2_right=(t2!=NULL)?t2->right:NULL;
+        int val=(t1!=NULL?t1->val:0)+(t2!=NULL?t2->val:0);
+        TreeNode *node=new TreeNode(val);
+        node->left=mergeTrees(t1_left, t2_left);
+        node->right=mergeTrees(t1_right, t2_right);
+        return node;
+    }
+};
+
+
 class Solution {
 public:
     TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {

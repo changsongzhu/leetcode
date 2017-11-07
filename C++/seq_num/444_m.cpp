@@ -36,6 +36,37 @@ org: [4,1,5,2,6,3], seqs: [[5,2,6,3],[4,1,5,2]]
 Output:
 true
 **/
+
+class Solution{
+public:
+    bool sequenceReconstruction(vector<int> &org, vector<vector<int> > &seqs){
+        if(seqs.size()==0) return false;
+        unordered_map<int, int> pos;
+        set<pair<int, int>> s;
+        map<int, int> nums;
+        bool empty=true;
+        for(int i=0;i<org.size();i++)
+        {
+            if(i!=0) s.insert({org[i-1], org[i]});
+            pos[org[i]]=i;
+            nums[org[i]]++;
+        }
+        for(auto seq:seqs)
+        {
+            for(int i=0;i<seq.size();i++)
+            {
+                if(nums.count(seq[i])==0) return false;
+                nums[seq[i]]=((nums[seq[i]]==0)?0:nums[seq[i]]-1);
+                if(i!=0&&s.count({seq[i-1], seq[i]})) s.erase({seq[i-1], seq[i]});
+                if(i!=0&&pos[seq[i]]<=pos[seq[i-1]]) return false;
+            }
+        }
+        for(auto a:nums){
+            if(a.second!=0) return false;
+        }
+        return s.size()==0;
+    }
+};
  
 class Solution {
 public:

@@ -23,6 +23,25 @@ Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant o
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+//Iterative Solution
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL) return NULL;
+        TreeNode *cur=root;
+        int mx=max(p->val, q->val);
+        int mn=min(p->val, q->val);
+        while(cur)
+        {
+            if(cur->val>=mn&&cur->val<=mx) return cur;
+            else if(cur->val<mn) cur=cur->right;
+            else cur=cur->left;
+        }
+        return cur;
+    }
+};
+
 //Refined Solution
 class Solution{
 public:

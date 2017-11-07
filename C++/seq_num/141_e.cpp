@@ -15,6 +15,24 @@ Can you solve it without using extra space?
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+
+//Refined Solution
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode *fast=head;
+        ListNode *slow=head;
+        while(fast&&fast->next)
+        {
+            fast=fast->next->next;
+            slow=slow->next;
+            if(fast==slow) return true;
+        }
+        return false;
+    }
+};
+
 class Solution {
 public:
     bool hasCycle(ListNode *head) {

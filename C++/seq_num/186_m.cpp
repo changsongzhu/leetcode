@@ -10,6 +10,29 @@ Could you do it in-place without allocating extra space?
 
 **/
 
+//Update for the input parameter
+class Solution {
+public:
+    void reverseWords(vector<char>& str) {
+        int i=0, j=str.size()-1;
+        while(i<j)
+        {
+            swap(str[i++], str[j--]);
+        }
+        int start=0;
+        for(int i=0;i<str.size();i++)
+        {
+            if(str[i]==' '||i==str.size()-1)
+            {
+                int j=start, k=(i==str.size()-1)?i:i-1;
+                while(j<k) swap(str[j++], str[k--]);
+                start=i+1;
+            }
+        }    
+    }
+};
+
+
 class Solution {
 public:
     void reverseWords(string &s) {

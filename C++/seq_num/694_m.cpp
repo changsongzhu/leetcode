@@ -30,6 +30,51 @@ and
 are considered different island shapes, because we do not consider reflection / rotation.
 Note: The length of each dimension in the given grid does not exceed 50.
 **/
+//Refine Solution
+class Solution{
+public:
+    void dfs(vector<vector<int>> &grid, int x, int y, vector<pair<int, int> > &path, int cnt)
+    {
+        if(x<0||x>=grid.size()||y<0||y>=grid[0].size()||grid[x][y]!=1) return;
+        path.push_back({x, y});
+        grid[x][y]=cnt;
+        dfs(grid, x-1, y, path, cnt);
+        dfs(grid, x+1, y, path, cnt);
+        dfs(grid, x, y-1, path, cnt);
+        dfs(grid, x, y+1, path, cnt);
+    }
+    void norm(vector<pair<int, int> > &path)
+    {
+        sort(path.begin(), path.end());
+        for(int i=1;i<path.size();i++)
+        {
+            path[i].first-=path[0].first;
+            path[i].second-=path[0].second;
+        }
+        path[0].first=path[0].second=0;
+    }
+    int numDistinctIslands(vector<vector<int> > &grid){
+        if(grid.size()==0||grid[0].size()==0) return 0;
+        int m=grid.size(), n=grid[0].size();
+        set<vector<pair<int, int>>>s;
+        for(int i=0;i<m;i++)
+        {
+           for(int j=0;j<n;j++)
+           {
+               vector<pair<int, int>> path;
+               if(grid[i][j]==1)
+               {
+                   dfs(grid, i, j, path, 2);
+                   norm(path);
+                   s.insert(path);
+               }
+           }
+        }
+        return s.size();
+    }
+};
+
+
 
 class Solution {
 public:

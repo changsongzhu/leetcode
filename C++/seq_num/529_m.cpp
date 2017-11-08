@@ -53,6 +53,47 @@ The click position will only be an unrevealed square ('M' or 'E'), which also me
 The input board won't be a stage when game is over (some mines have been revealed).
 For simplicity, not mentioned rules should be ignored in this problem. For example, you don't need to reveal all the unrevealed mines when the game is over, consider any cases that you will win the game or flag any squares.
 **/
+class Solution {
+public:
+    vector<vector<char> > updateBoard(vector<vector<char> >&board, vector<int>&click){
+        if(board.size()==0||board[0].size()==0) return board;
+        queue<pair<int, int> > q;
+        q.push({click[0], click[1]});
+        int m=board.size(), n=board[0].size();
+        while(!q.empty())
+        {
+            auto a=q.front();q.pop();
+            if(board[a.first][a.second]=='M'){
+                board[a.first][a.second]='X';
+                return board;
+            }else{
+                int cnt=0;
+                vector<pair<int, int> > neighbors;
+                for(int i=-1;i<2;i++){
+                    for(int j=-1;j<2;j++){
+                        int x=a.first+i, y=a.second+j;
+                        if(x<0||x>=m||y<0||y>=n) continue;
+                        if(board[x][y]=='M') 
+                            cnt++;
+                        else if(board[x][y]=='E')
+                            neighbors.push_back({x, y});
+                    }
+                }
+                if(cnt>0)
+                    board[a.first][a.second]=cnt+'0';
+                else{
+                    for(auto n:neighbors)
+                    {
+                        board[n.first][n.second]='B';
+                        q.push(n);
+                    }
+                }
+            }
+        }
+        return board;
+    }
+};
+
 
 class Solution {
 public:

@@ -31,6 +31,16 @@ Note:
 The range of n is [1, 10000].
 The range of dresses number in a super washing machine is [0, 1e5].
 **/
+/*
+
+Machines:	[0	0	11	5]
+Avg		[4	4	4	4]
+Delta		-4	-4	7	1
+Cnt		-4	-8	-1	0
+
+So the max is 8
+*/
+
 
 class Solution {
 public:

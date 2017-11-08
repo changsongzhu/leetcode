@@ -41,6 +41,71 @@ are considered same island shapes. Because if we flip the first array in the up/
 Note: The length of each dimension in the given grid does not exceed 50.
 
 
+//Refined Solution
+class Solution {
+public:
+    void dfs(vector<vector<int> > &grid, int x, int y, vector<pair<int, int>>&path, int cnt)
+    {
+        if(x<0||x>=grid.size()||y<0||y>=grid[0].size()||grid[x][y]!=1) return;
+        path.push_back({x, y});
+        grid[x][y]=cnt;
+        dfs(grid, x-1, y, path, cnt);
+        dfs(grid, x+1, y, path, cnt);
+        dfs(grid, x, y-1, path, cnt);
+        dfs(grid, x, y+1, path, cnt);
+    }
+    vector<pair<int, int>>norm(vector<pair<int, int> >&path)
+    {
+        vector<vector<pair<int, int>>> s(8);
+        for(auto p:path)
+        {
+            int x=p.first, y=p.second;
+            s[0].push_back({x, y});
+            s[1].push_back({-x, y});
+            s[2].push_back({x, -y});
+            s[3].push_back({-x, -y});
+            s[4].push_back({y, x});
+            s[5].push_back({-y,x});
+            s[6].push_back({y, -x});
+            s[7].push_back({-y,-x});
+        }
+        for(auto &a:s) sort(a.begin(), a.end());
+        for(auto &a:s)
+        {
+            for(int i=1;i<a.size();i++)
+            {
+                a[i].first-=a[0].first;
+                a[i].second-=a[0].second;
+            }
+            a[0].first=a[0].second=0;
+        }
+        sort(s.begin(), s.end());
+        return s[0];
+    }
+    int numDistinctIslands2(vector<vector<int> > &grids){
+        if(grids.size()==0||grids[0].size()==0) return 0;
+        int m=grids.size(), n=grids[0].size();
+        set<vector<pair<int, int>>> s;
+        for(int i=0;i<m;i++)
+        {
+           for(int j=0;j<n;j++)
+           {
+               if(grids[i][j]==1)
+               {
+                   vector<pair<int, int> > path;
+                   dfs(grids, i, j, path, 2);
+                   vector<pair<int, int>> r=norm(path);
+                   s.insert(r);
+               }
+           }
+        }
+        return s.size();
+    }
+
+};
+
+
+
 class Solution {
 public:
     map<int, vector<pair<int,int>>> mp;

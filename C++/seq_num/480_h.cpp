@@ -21,6 +21,13 @@ Note:
 You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-empty array.
 **/
 
+/**
+
+As the small and large set are multiset. use the small.erase(small.find(val)) to delete the item in the set
+
+**/
+
+
 class Solution {
 public:
     vector<double> medianSlidingWindow(vector<int>& nums, int k) {

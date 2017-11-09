@@ -21,6 +21,27 @@ Explanation: The longest consecutive path is [1, 2, 3] or [3, 2, 1].
  
 Note: All the values of tree nodes are in the range of [-1e7, 1e7].
 **/
+class Solution {
+public:
+    int longestConsecutive(TreeNode *root)
+    {
+        if(root==NULL) return 0;
+        int res=helper(root, -1)+helper(root, 1)+1;
+        return max(res, max(longestConsecutive(root->left), longestConsecutive(root->right)));
+    }
+    int helper(TreeNode *root, int diff)
+    {
+        if(root==NULL) return 0;
+        int left=0, right=0;
+        if(root->left!=NULL&&root->val-root->left->val==diff)
+            left=1+helper(root->left, diff);
+        if(root->right!=NULL&&root->val-root->right->val==diff)
+            right=1+helper(root->right, diff);
+        return max(left, right);
+    }
+};
+
+
 
 class Solution {
 public:

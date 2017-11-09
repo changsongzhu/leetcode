@@ -16,74 +16,128 @@ Return ["eat","oath"].
 Note:
 You may assume that all inputs are consist of lowercase letters a-z.
 **/
-class TrieNode{
-    public:
-      TrieNode *child[26];
-      string word;
-      TrieNode():word(""){
-          for(auto &c:child) c=NULL;
-      }
+class AutocompleteSystem {
+public:
+    struct comp{
+      bool operator()(pair<string, int>&a, pair<string, int>&b){
+          return a.second>b.second||(a.second==b.second&&a.first<b.first);
+      }  
     };
-class Trie{
-    public:
-        TrieNode *root;
-        Trie(){
-            root=new TrieNode();
+    typedef priority_queue<pair<string, int>, vector<pair<string, int> >, comp> my_pq;
+    
+    struct TrieNode{
+        TrieNode *child[27];
+        string sentence;
+        int times;
+        TrieNode():sentence(""), times(0)
+        {
+            for(auto &c:child) c=NULL;
         }
-        void add(string w)
+    };
+    struct Trie{
+        TrieNode *root;
+        Trie()
+        {
+            root= new TrieNode();
+        }
+        int toIndex(char c)
+        {
+            return c==' '?26:c-'a';
+        }
+        void insert(string sentence, int times)
         {
             TrieNode *p=root;
-            for(auto c:w)
+            for(auto c:sentence)
             {
-                if(p->child[c-'a']==NULL) p->child[c-'a']=new TrieNode();
-                p=p->child[c-'a'];
+                if(p->child[toIndex(c)]==NULL) p->child[toIndex(c)]=new TrieNode();
+                p=p->child[toIndex(c)];
             }
-            p->word=w;
+            p->sentence=sentence;
+            p->times=times;
+        }
+        void add(string sentence)
+        {
+            TrieNode *p=root;
+            for(auto c:sentence)
+            {
+               if(p->child[toIndex(c)]==NULL) p->child[toIndex(c)]=new TrieNode();
+                p=p->child[toIndex(c)]; 
+            }
+            if(p->times==0)
+            {
+                p->sentence=sentence;
+                p->times++;
+            }
+            else
+            {
+                p->times++;
+            }
+        }
+        TrieNode *lookup(string s)
+        {
+            TrieNode *p=root;
+            for(auto c:s)
+            {
+                if(p->child[toIndex(c)]==NULL) return NULL;
+                p=p->child[toIndex(c)];
+            }
+            return p;
         }
     };
-class Solution {
-public:
-    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        if(board.size()==0||board[0].size()==0||words.size()==0) return {};
-        int m=board.size(), n=board[0].size();
-        Trie *T= new Trie();
-        for(auto w:words) T->add(w);
-        vector<string> res;
-        vector<vector<bool> > visited(m, vector<bool>(n, false));
-        for(int i=0;i<m;i++)
+    
+    void traversal(TrieNode *p, my_pq &pq)
+    {
+        if(p==NULL) return;
+        if(p->times!=0)
         {
-            for(int j=0;j<n;j++)
+            pq.push({p->sentence, p->times});
+            if(pq.size()>3)
             {
-                int idx=board[i][j]-'a';
-                if(T->root->child[idx])
-                {
-                    helper(board, i, j, visited, T->root->child[idx], res);
-                }
-                    
+                pq.pop();
+            }
+        }
+        for(auto &c:p->child)
+        {
+            traversal(c, pq);
+        }
+    }
+    
+    AutocompleteSystem(vector<string> sentences, vector<int> times) {
+        this->root= new Trie();
+        for(int i=0;i<sentences.size();i++)
+        {
+            root->insert(sentences[i], times[i]);
+        }
+        
+    }
+    
+
+    
+    vector<string> input(char c) {
+        vector<string> res;
+        if(c=='#')
+        {
+            root->add(inputStr);
+            inputStr.clear();
+        }
+        else
+        {
+            inputStr.append(1, c);
+            TrieNode *p=root->lookup(inputStr);
+            if(p==NULL) return res;
+            my_pq pq;
+            traversal(p, pq);
+            for(int i=0;!pq.empty()&&i<3;i++)
+            {
+                res.insert(res.begin(),pq.top().first);
+                pq.pop();
             }
         }
         return res;
+        
+        
     }
-    void helper(vector<vector<char> >&board, 
-                int x, 
-                int y, 
-                vector<vector<bool> >&visited,
-                TrieNode* root, 
-                vector<string> &res)
-    {
-        if(root->word.size()!=0)
-        {
-            res.push_back(root->word);
-            root->word.clear();
-        }
-        vector<vector<int> > dirs={{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        visited[x][y]=true;
-        for(int i=0;i<dirs.size();i++)
-        {
-            int a=x+dirs[i][0], b=y+dirs[i][1];
-            if(a<0||a>=board.size()||b<0||b>=board[0].size()||visited[a][b]||root->child[board[a][b]-'a']==NULL) continue;
-            helper(board, a, b, visited, root->child[board[a][b]-'a'], res);
-        }
-        visited[x][y]=false;
-    }
+private:
+    string inputStr;
+    Trie *root;
 };

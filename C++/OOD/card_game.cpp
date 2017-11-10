@@ -1,5 +1,63 @@
 Card Game
 
+//Another Solution
+enum Suit { SPADES, CLUBS, HEARTS, DIAMONDS, };
+enum Face { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, };
+
+class Card {
+public:
+    Card(Suit suit, Face face) : suit(suit), face(face) {}
+    Card(const Card& orig) : suit(orig.suit), face(orig.face) {}
+    Suit getSuit() const { return suit; }
+    Face getFace() const { return face; }
+private:
+    Card() {}
+    Suit suit;
+    Face face;
+    friend class Deck;
+};
+
+class Deck {
+public:
+    Deck() {
+        int index = 0;
+        for (int i = 0; i < SUITS_PER_DECK; ++i) {
+            for (int j = 0; j < CARDS_PER_SUIT; ++j) {
+                index = i * CARDS_PER_SUIT + j;
+                cards[index].suit = (Suit) i;
+                cards[index].face = (Face) j;
+            }
+        }
+    }
+
+    Deck(const Deck& orig) {
+        for (int i = 0; i < SUITS_PER_DECK * CARDS_PER_SUIT; ++i) {
+            cards[i] = orig.cards[i];
+        }
+    }
+
+    void Shuffle() {
+        int bagSize = SUITS_PER_DECK * CARDS_PER_SUIT;
+        int index = 0;
+        srand(time(NULL));
+        while (bagSize) {
+            index = rand() % bagSize;
+            swap(cards[--bagSize], cards[index]);
+        }
+    }
+
+    static const int SUITS_PER_DECK = 4;
+    static const int CARDS_PER_SUIT = 13;
+private:
+    Card cards[SUITS_PER_DECK * CARDS_PER_SUIT];
+    friend ostream & operator<<(ostream&, const Deck&);
+};
+
+
+
+//my Solution
+
+
 enum class Suit { Diamonds=1, Hearts, Clubs, Spades};
 
 class Card{

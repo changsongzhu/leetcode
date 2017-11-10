@@ -27,6 +27,39 @@ Example 3:
 Input: amount = 10, coins = [10] 
 Output: 1
 **/
+//Explantion
+/*
+using dp[i][j] denotes the number of ways to make up j amount with i types coins
+
+For he dp[i][j], if we have only i-1 types coins, we have dp[i-1][j] ways to make up j amount
+Now we have coins[i], if j>=coins[i], we have another dp[i][j-coins[i]] ways to make up j amount money
+
+So the equation is: dp[i][j]=dp[i-1][j]+(j>=coins[i]?dp[i][j-coins[i]]:0);
+
+for each i, there is dp[i][0]=1;
+
+*/
+
+
+class Solution {
+public:
+    int change(int amount, vector<int>&coins)
+    {
+        int m=coins.size();
+        vector<vector<int> > dp(m+1, vector<int>(amount+1, 0));
+        dp[0][0]=1;
+        for(int i=1;i<=m;i++)
+        {
+            dp[i][0]=1;
+            for(int j=1;j<=amount;j++)
+            {
+               dp[i][j]=dp[i-1][j]+(j>=coins[i-1]?dp[i][j-coins[i-1]]:0);
+            }
+        }
+	return dp[m][amount];
+    }
+};
+
 class Solution {
 public:
     int change(int amount, vector<int>& coins) {

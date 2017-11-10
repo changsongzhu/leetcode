@@ -48,94 +48,128 @@ The number of complete sentences that to be searched won't exceed 100. The lengt
 Please use double-quote instead of single-quote when you write test cases even for a character input.
 Please remember to RESET your class variables declared in class AutocompleteSystem, as static/class variables are persisted across multiple test cases. Please see here for more details.
 **/
-
 class AutocompleteSystem {
 public:
-    struct TrieNode {
+    struct comp{
+      bool operator()(pair<string, int>&a, pair<string, int>&b){
+          return a.second>b.second||(a.second==b.second&&a.first<b.first);
+      }  
+    };
+    typedef priority_queue<pair<string, int>, vector<pair<string, int> >, comp> my_pq;
+    
+    struct TrieNode{
         TrieNode *child[27];
-        int times;
         string sentence;
-        TrieNode():times(0), sentence("") {
+        int times;
+        TrieNode():sentence(""), times(0)
+        {
             for(auto &c:child) c=NULL;
         }
     };
-    int toIndex(char c)
-    {
-        return c==' '?26:c-'a';
-    }
     struct Trie{
         TrieNode *root;
         Trie()
         {
-            root=new TrieNode();
+            root= new TrieNode();
         }
-        void insert(string s, int times)
+        int toIndex(char c)
+        {
+            return c==' '?26:c-'a';
+        }
+        void insert(string sentence, int times)
+        {
+            TrieNode *p=root;
+            for(auto c:sentence)
+            {
+                if(p->child[toIndex(c)]==NULL) p->child[toIndex(c)]=new TrieNode();
+                p=p->child[toIndex(c)];
+            }
+            p->sentence=sentence;
+            p->times=times;
+        }
+        void add(string sentence)
+        {
+            TrieNode *p=root;
+            for(auto c:sentence)
+            {
+               if(p->child[toIndex(c)]==NULL) p->child[toIndex(c)]=new TrieNode();
+                p=p->child[toIndex(c)]; 
+            }
+            if(p->times==0)
+            {
+                p->sentence=sentence;
+                p->times++;
+            }
+            else
+            {
+                p->times++;
+            }
+        }
+        TrieNode *lookup(string s)
         {
             TrieNode *p=root;
             for(auto c:s)
             {
-                if(p->child[toIndex(c)]==NULL) p->child[toIndex(c)]= new TrieNode();
+                if(p->child[toIndex(c)]==NULL) return NULL;
                 p=p->child[toIndex(c)];
-            }
-            p->sentence=s;
-            p->times=times;
-        }
-        TrieNode* lookup(string s)
-        {
-            if(s.size()==0) return NULL;
-            TireNode *p=root;
-            for(int i=0;i<s.size();i++)
-            {
-                if(p->child[toIndex(s[i])]==NULL) return NULL;
-                p=p->child[toIndex(s[i])];
             }
             return p;
         }
     };
-
-    void traveral(TrieNode *root, vector<pair<string, int> > &list)
+    
+    void traversal(TrieNode *p, my_pq &pq)
     {
-        if(root->times!=0) list.push_back({root->sentence, root->times});
-        TrieNode *p=root;
-        for(int i=0;i<27;i++)
+        if(p==NULL) return;
+        if(p->times!=0)
         {
-            if(p->child[i]!=NULL) traversal(p->child[i], list);
+            pq.push({p->sentence, p->times});
+            if(pq.size()>3)
+            {
+                pq.pop();
+            }
+        }
+        for(auto &c:p->child)
+        {
+            traversal(c, pq);
         }
     }
-
-    AutocompleteSystem(vector<string> sentences, vector<int> times) 
-    {
+    
+    AutocompleteSystem(vector<string> sentences, vector<int> times) {
         this->root= new Trie();
         for(int i=0;i<sentences.size();i++)
         {
             root->insert(sentences[i], times[i]);
         }
+        
     }
+    
 
+    
     vector<string> input(char c) {
-       vector<string> res;
-       vector<pair<string, int> > list;
-       if(c=='#')
-       {
-           cur_str.clear();
-       }
-       else
-       {
-           cur_str.append(c);
-           TrieNode *p=root->lookup(cur_str);
-           if(p!=NULL)
-           {
-              travesal(p, list);
-              sort(list.begin(), list.end(), [](pair<string, int> &a, pair<string, int> &b){return a.second>b.second||(a.second==b.second&&a.sentence<b.sentence);}
-           }
-           for(int i=0;i<list.size()&&i<3;i++)
-               res.push_back(list.sentence);
-       }
-       return res;
-
+        vector<string> res;
+        if(c=='#')
+        {
+            root->add(inputStr);
+            inputStr.clear();
+        }
+        else
+        {
+            inputStr.append(1, c);
+            TrieNode *p=root->lookup(inputStr);
+            if(p==NULL) return res;
+            my_pq pq;
+            traversal(p, pq);
+            for(int i=0;!pq.empty()&&i<3;i++)
+            {
+                res.insert(res.begin(),pq.top().first);
+                pq.pop();
+            }
+        }
+        return res;
+        
+        
     }
 private:
+    string inputStr;
     Trie *root;
-    string cur_str;
 };
-

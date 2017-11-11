@@ -10,6 +10,42 @@ Note:
 If there is no such window in S that covers all characters in T, return the empty string "".
 If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
 **/
+//Another Solution
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        map<char, int> m;
+        for(auto c:t)m[c]++;
+        int count=0;
+        int left=0;
+        int len=INT_MAX;
+        int start=-1;
+        for(int i=0;i<s.size();i++)
+        {
+            if(m.count(s[i]))
+            {
+                m[s[i]]--;
+                if(m[s[i]]>=0) count++;
+            }
+            while(count==t.size())
+            {
+                if(i-left+1<len)
+                {
+                    len=i-left+1;
+                    start=left;
+                }
+                if(m.count(s[left]))
+                {
+                    m[s[left]]++;
+                    if(m[s[left]]>0)count--;
+                }
+                left++;
+            }
+        }
+        return start!=-1?s.substr(start, len):"";
+    }
+};
+
 
 class Solution {
 public:

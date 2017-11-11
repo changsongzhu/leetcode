@@ -11,6 +11,34 @@ Although the above answer is in lexicographical order, your answer could be in a
 
 **/
 
+//Refine Solution
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<vector<char> > dict={{}, {}, {'a', 'b', 'c'},{'d','e','f'},{'g','h','i'},{'j', 'k', 'l'},
+                                    {'m', 'n', 'o'}, {'p', 'q', 'r', 's'}, {'t', 'u', 'v'}, {'w', 'x', 'y', 'z'}};
+        vector<string> res;
+        if(digits.size()==0) return {};
+        string path="";
+        helper(digits, 0, res, path, dict);
+        return res;
+        
+    }
+    void helper(string digits, int start, vector<string> &res, string path, vector<vector<char>>&dict)
+    {
+        if(start==digits.size())
+        {
+            res.push_back(path);
+            return;
+        }
+        for(auto c:dict[digits[start]-'0'])
+        {
+            helper(digits, start+1, res, path+c, dict);
+        }
+    }
+};
+
+
 class Solution {
 public:
     vector<string> letterCombinations(string digits) {

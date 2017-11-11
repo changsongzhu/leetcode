@@ -25,6 +25,37 @@ return its level order traversal as:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+//Iterative Solution
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode *root)
+    {
+        vector<vector<int> > res;
+        queue<pair<TreeNode *, int> > q;
+        if(root)q.push({root, 1});
+        while(!q.empty())
+        {
+            auto a=q.front();q.pop();
+            if(res.size()<a.second)
+            {
+                res.push_back({a.first->val});
+            }
+            else
+            {
+                res[a.second-1].push_back(a.first->val);
+            }
+            if(a.first->left)
+                q.push({a.first->left, a.second+1});
+            if(a.first->right)
+                q.push({a.first->right, a.second+1});
+        }
+        return res;
+    }
+};
+
+
+//Recursive Solution
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {

@@ -11,6 +11,32 @@ Note:
 You may assume both s and t have the same length.
 
 **/
+//Refined Solution
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        return generateKey(s)==generateKey(t);
+    }
+    string generateKey(string s)
+    {
+        unordered_map<char, int> m;
+        string key="";
+        for(int i=0;i<s.size();i++)
+        {
+            if(m.count(s[i])==0)
+            {
+                key.append(1, '*');
+                m[s[i]]=i;
+            }
+            else
+            {
+                key+=to_string(m[s[i]]);
+            }
+        }
+        return key;
+    }
+};
+
 
 //Refined Solution
 class Solution {

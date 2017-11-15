@@ -10,6 +10,39 @@ A solution is ["cats and dog", "cat sand dog"].
 **/
 
 
+//From the begin to end scanning
+class Solution {
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        set<string> dict(wordDict.begin(), wordDict.end());
+        unordered_map<string, vector<string> >m;
+        return wordBreak(s, dict, m);
+    }
+    vector<string> wordBreak(string s, set<string> &dict, unordered_map<string, vector<string>> &m)
+    {
+        if(m.count(s)) return m[s];
+        vector<string> res;
+        if(dict.count(s)) res.push_back(s);
+        for(int i=1;i<s.size();i++)
+        {
+            if(dict.count(s.substr(0, i)))
+            {
+                string word=s.substr(0, i);
+                vector<string> tmp=combine(word, wordBreak(s.substr(i), dict, m));
+                res.insert(res.end(), tmp.begin(), tmp.end());
+            }
+        }
+        m[s]=res;
+        return res;
+    }
+    vector<string> combine(string word, vector<string> prev)
+    {
+        for(int i=0;i<prev.size();i++)
+            if(prev[i].size()) prev[i]=word+" "+prev[i];
+        return prev;
+    }
+};
+
 
 //Recursive Solution
 class Solution{

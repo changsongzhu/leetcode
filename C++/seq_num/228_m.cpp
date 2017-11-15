@@ -4,6 +4,29 @@ Given a sorted integer array without duplicates, return the summary of its range
 For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
 **/
 
+//Start and End Solution
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        if(nums.size()==0) return {};
+        vector<string> res;
+        int start=nums[0];
+        int next=nums[0]+1;
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]==next) {next++;continue;}
+            else{
+                (start==next-1)?res.push_back(to_string(start)): res.push_back(to_string(start)+"->"+to_string(next-1));
+                start=nums[i];
+                next=nums[i]+1;
+            }
+        }
+        start==next-1?res.push_back(to_string(start)): res.push_back(to_string(start)+"->"+to_string(next-1));
+        return res;
+    }
+};
+
+
 //Refined Solution
 class Solution {
 public:

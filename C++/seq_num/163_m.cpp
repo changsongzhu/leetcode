@@ -9,7 +9,7 @@ public:
     vector<string> findMissingRanges(vector<int> &nums, int lower, int upper)
     {
         vector<string> res;
-        int next=lower;
+        long long next=lower;
         for(int i=0;i<nums.size();i++)
         {
             if(nums[i]<next) continue;

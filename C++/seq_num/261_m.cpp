@@ -9,6 +9,38 @@ Hint:
 2.     According to the definition of tree on Wikipedia: “a tree is an undirected graph in which any two vertices are connected by exactly one path. In other words, any connected graph without simple cycles is a tree.”
 Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
 **/
+class Solution {
+public:
+    bool validTree(int n, vector<pair<int, int> >&edges){
+        vector<vector<int> > graph(n, vector<int>(0));
+        vector<bool> visited(n, false);
+        for(auto a:edges)
+        {
+            graph[a.first].push_back(a.second);
+            graph[a.second].push_back(a.first);
+        }
+        queue<pair<int, int> > q;
+        q.push({0, -1});
+        visited[0]=true;
+        while(!q.empty())
+        {
+            auto a=q.front();q.pop();
+            for(auto c:graph[a.first])
+            {
+                if(c==a.second) continue;
+                if(visited[c]==true) return false;
+                q.push({c, a.first});
+                visited[c]=true;
+            }
+        }
+        for(auto a:visited)
+        {
+            if(a==false) return false;
+        }
+        return true;
+    }
+};
+
  
 class Solution {
 public:

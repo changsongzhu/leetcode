@@ -7,6 +7,29 @@ Given [[0, 30],[5, 10],[15, 20]],
 return 2.
 **/
 
+//Another Solution using the sorting
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        vector<pair<int, int> > v;
+        for(auto i:intervals)
+        {
+            v.push_back({i.start, 1});
+            v.push_back({i.end, 0});
+        }
+        sort(v.begin(), v.end());
+        int count=0;
+        int res=0;
+        for(auto a:v)
+        {
+            a.second==1?count++:count--;
+            res=max(res, count);
+        }
+        return res;
+    }
+};
+
+
 //MinHeap Solution
 class Solution {
 public:

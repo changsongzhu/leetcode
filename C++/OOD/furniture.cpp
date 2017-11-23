@@ -11,14 +11,14 @@ class Wood:public Material{
 public:
     string getMaterial()
     {
-        return “wood”;
+        return "wood";
     }
 };
 class Steel:public Material{
 public:
      string getMaterial()
      {
-         return “steel”;
+         return "steel";
      }
 };
 
@@ -32,7 +32,7 @@ public:
     {
         return type;
     }
-    string material()
+    string getMaterial()
     {
          return material->getMaterial();
     }
@@ -45,27 +45,39 @@ class Table:public Furniture{
 public:
     Table(Material*material):Furniture(material)
      {
-         type=”table”;
+         type="table";
      }
-}
+};
 
 class Chair:public Furniture{
 public:
     Table(Material*material):Furniture(material)
      {
-         type=”chair”;
+         type="chair";
      }
-}
+};
+
+class FurnitureFactory{
+public:
+    Furniture * createFurniture(string type, Material *material)
+    {
+        if(type=="table")
+            return new Table(material);
+        else if(type=="chair")
+            return new Chair(material);
+    }
+};
 
 
 int main(void)
 {
     Material *steel = new Steel();
     Material *wood = new Wood();
-    Table *stellTable=new Table(steel);
-    Table *woodTable=new Table(wood);
-     Chair *steelChair = new Chair(steel);
-     Chair *woodChair = new Chair(wood);
+    FurnitureFactory factory;
+    Table *stellTable=factory.createFurniture("table",steel);
+    Table *woodTable=factory.createFurniture("table",wood);
+     Chair *steelChair = factory.createFurniture("chair",steel);
+     Chair *woodChair = factory.createFurniture("chair",wood);
 }
 
 

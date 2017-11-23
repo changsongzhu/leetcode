@@ -39,6 +39,38 @@ k will be an integer in the range [1, 50].
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+//Refined Solution
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* root, int k) {
+        int len=0;
+        ListNode *p=root;
+        while(p){
+            len++;
+            p=p->next;
+        }
+        p=root;
+        vector<ListNode*> res(k, NULL);
+        int idx=0;
+        while(p)
+        {
+            int cnt=(len%k)?len/k+1:len/k;
+            len-=cnt;
+            k--;
+            res[idx++]=p;
+            ListNode *prev=NULL;
+            while(cnt>0){
+                prev=p;
+                p=p->next;
+                cnt--;
+            }
+            if(prev)prev->next=NULL;
+        }
+        return res;  
+    }
+};
+
+
 class Solution {
 public:
     vector<ListNode*> splitListToParts(ListNode* root, int k) {

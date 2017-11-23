@@ -33,7 +33,7 @@ public:
         this->parkingSpace=parkingSpace;
         for(int i=0;i<parkingSpace.size();i++)
         {
-            freeParkingSpace({parkingSpace[i].distance, i});
+            freeParkingSpace.push({parkingSpace[i].distance, i});
         }
         this->freeParkingSpace=parkingSpace.size();
         this->totalParkingSpace=parkingSpace.size();

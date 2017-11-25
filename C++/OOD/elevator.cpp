@@ -88,9 +88,9 @@ public:
        
         for(int i=0;i<elevators.size();i++)
         {
-             int tmp=0;  
-             int eleCurFloor=elevators[i].getCurFloor();
-             int absDist=abs(eleCurFloor, curFloor);
+            int tmp=0;  
+            int eleCurFloor=elevators[i].getCurFloor();
+            int absDist=abs(eleCurFloor-curFloor);
             if(elevators[i].getDirection==UP)
             {
                tmp=eleCurFloor<curFloor?absDist:2*(maxFloor-eleCurFloor)+absDist;
@@ -105,7 +105,17 @@ public:
                 idx=i;
             }
         }
-        
+        return elevators[idx];
+    }
+    void run()
+    {
+        pthread_t threads[elevators.size()];
+        for(int i=0;i<elevators.size();i++)
+        {
+            int rc=pthread_create(&threads[i], NULL, &(elevators[i].run), (void*)NULL);
+            if(rc) exit(-1);
+        }
+        pthread_exit(NULL);
     }
 private:
     static RequestProcessor *instance;
@@ -126,7 +136,7 @@ class User{
         elevator.selectTargetFloor(direction, targetFloor);
     }
 private:
-   Elevator elevator;
+    Elevator elevator;
 };
 
 enum DIRECTION{

@@ -34,7 +34,7 @@ public:
     {
         for(int i=0;i<runway.size();i++)
         {
-            if(runway[i].vacant) 
+            if(runway[i].vacant)
             {
                  runway[i].vacant=false;
                  return runway[i];
@@ -48,7 +48,7 @@ public:
 
     void requestLanding(Airplane& airplane)
     {
-        arrival_queue.push(airplane);
+        arrival_queue.push(pair<airplane.arrivalTime,airplane>);
     }
 
     void processing()
@@ -56,20 +56,20 @@ public:
          while(1)
          {
              int time=time();
-             if(!arrival_queue.empty()&&time==arrival_queue.top().arrivalTime)
+             if(!arrival_queue.empty()&&time==arrival_queue.top().first)
              {
                    Runway &runway=reserveRunway();
-                   Airplane airplane=arrival_queue.top();
+                   Airplane airplane=arrival_queue.top().second;
                    arrival_queue.pop();
                    airplane.landing(runway);
-                   depart.push(airplane);
+                   depart.push(pair<airplane.departTime, airplane>);
                    releaseRunway();
              }
              int time=time();
-              if(!depart_queue.empty()&&time==depart_queue.top().arrivalTime)
+              if(!depart_queue.empty()&&time==depart_queue.top().first)
               {
                   Runway &runway=reserveRunway();
-                  Airplane airplane=depart_queue.top();
+                  Airplane airplane=depart_queue.top().second;
                   depart_queue.pop();
                   airplane.takeoff(runway);
                   releaseRunway();
@@ -77,19 +77,14 @@ public:
          }
     }
 
-    struct depComp{
-        bool operator()(Airplane& A, Airplane & B){
-            return A.departTime>B.departTime;
-        }
-    };
-   struct arrComp{
-        bool operator()(Airplane& A, Airplane & B){
-            return A.arrivalTime>B.arrivalTime;
+    struct comp{
+        bool operator()(pair<int, Airplane> &A, pair<int, Airplane> &B){
+            return A.first>B.first;
         }
     };
 private:
     vector<Runway> runway;
-    priority_queue<Airplane, vector<Airplane>, depComp>depart_queue;
-    priority_queue<Airplane, vector<Airplane>, arrComp>arrival_queue;
+    priority_queue<pair<int, AirPlane>, vector<pair<int, AirPlane> >, comp>depart_queue;
+    priority_queue<pair<int, AirPlane>, vector<pair<int, AirPlane> >, comp>arrival_queue;
 };
 

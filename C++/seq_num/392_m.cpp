@@ -16,6 +16,22 @@ Notes:
 ·       After the scan, check if the s’s pointer points to the end of the string s. If so, return true, otherwise, return false
 **/
 
+//Refind Solution
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+       if(s.size()==0) return true;
+       int m=s.size(), n=t.size();
+       int index=0;
+       for(int i=0;i<t.size();i++)
+       {
+           if(s[index]==t[i])index++;
+           if(index==m) return true;
+       }
+       return index==m;
+    }
+};
+
  
 class Solution {
 public:

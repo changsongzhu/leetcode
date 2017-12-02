@@ -14,4 +14,4 @@ public:
             swap(nums[i], nums[i+1]);
         }
     }
-}
+};

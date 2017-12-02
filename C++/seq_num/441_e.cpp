@@ -8,6 +8,22 @@ n = 5  The coins can form the following rows: ¤ ¤ ¤ ¤ ¤  Because the 3rd ro
 Example 2:
 n = 8  The coins can form the following rows: ¤ ¤ ¤ ¤ ¤ ¤ ¤ ¤  Because the 4th row is incomplete, we return 3.
 **/
+
+//Straight forward solution
+class Solution {
+public:
+    int arrangeCoins(int n) {
+        int cnt=1;
+        while(n>=cnt)
+        {
+            n=n-cnt;
+            cnt++;
+        }
+        return cnt-1;
+    }
+};
+
+
 class Solution {
 public:
     int arrangeCoins(int n) {

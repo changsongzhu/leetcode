@@ -1,11 +1,9 @@
-#include <stdlib.h>
 #include <iostream>
-#include <stdio.h>
 #include <string>
 #include <map>
 #include <vector>
 #include <set>
-
+#include <typeinfo>
 
 using namespace std;
 
@@ -22,35 +20,55 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+struct Point{
+    int x;
+    int y;
+    Point(int a, int b):x(a), y(b){}
+};
 
-class Solution {
+class Solution{
 public:
-    bool checkPossibility(vector<int>& nums) {
-        if(nums.size()<3) return true;
+    vector<Point > kCloestPoint(vector<Point> &points, Point &origin, int k)
+    {
+        vector<Point> res;
+        map<int, set<pair<int, int> > > m;
         int cnt=0;
-        int prev=nums[0];
-        for(int i=1;i<nums.size();i++)
+        for(int i=0;i<points.size();i++)
         {
-            if(nums[i]<prev)
-            {
-               cnt++;
-            }
-            else
-                prev=nums[i];
+            int x=points[i].x, y=points[i].y;
+            int dist=(x-origin.x)*(x-origin.x)+(y-origin.y)*(y-origin.y);
+            m[dist].insert(make_pair(x, y));
         }
-        return cnt<=1;
+       for(map<int, set<pair<int, int> >::iterator it=m.begin();it!=m.end();it++)
+       {
+            if(cnt==k) break;
+            for(auto b:it->second)
+            {
+                res.push_back(Point(b.first, b.second);
+                cnt++;
+                if(cnt==k) break;
+            }
+       } 
+       return res;
     }
 };
+
 
 int main(void)
 {
     Solution solution;
-    vector<int> nums(3, 0);
-    nums[0]=4;
-    nums[1]=2;
-    nums[2]=1;
-    bool res=solution.checkPossibility(nums);
-    cout<<"Result: " << res<<endl;
+    vector<Point> points;
+    nums.push_back(Point(4, 6));
+    nums.push_back(Point(4, 7));
+    nums.push_back(Point(4, 4));
+    nums.push_back(Point(2, 5));
+    nums.push_back(Point(1, 1));
+    Point origin(0, 0);
+    vector<Point> res=solution.kCloestPoint(points, origin, 3);
+    cout<<"Result:"<<endl;
+    for(auto a: res)
+        cout<<a.x<<a.y<<endl;
+    cout<<"Finish"<<endl; 
 
     return 0;
 }

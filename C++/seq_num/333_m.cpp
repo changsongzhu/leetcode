@@ -18,6 +18,37 @@ Follow up:
 Can you figure out ways to solve it with O(n) time complexity?
 **/
 
+
+//Right Solution
+class Solution {
+public:
+    struct Result{
+        int size;
+        int lower;
+        int upper;
+        Result(int s, int l, int u){
+            size=s;lower=l;upper=u;
+        }
+    };
+    int largestBSTSubtree(TreeNode* root) {
+        if(root==NULL) return 0;
+        int res=0;
+        helper(root, res);
+        return res;   
+    }
+    Result helper(TreeNode *root, int &res){
+        if(root==NULL) return  Result(0, INT_MAX, INT_MIN);
+        Result left=helper(root->left, res);
+        Result right=helper(root->right, res);
+        if(left.size==-1||right.size==-1||root->val<=left.upper||root->val>=right.lower){
+            return Result(-1, 0, 0);     
+        }
+        res=max(res, right.size+left.size+1);
+        return  Result(right.size+left.size+1, min(root->val, left.lower), max(root->val,right.upper));    
+    }
+};
+
+//Wrong Solution
 class Solution {
 public:
     int largestBSTSubtree(TreeNode* root) {

@@ -23,6 +23,35 @@ Output: -1
 Note:
 The given array will be in the range [1, 20000].
 **/
+
+/*Slide Window Solution*/
+class Solution {
+public:
+    int kEmptySlots(vector<int>& flowers, int k) {
+        if(flowers.size()<k+2) return -1;
+        int n=flowers.size();
+        vector<int> days(n, 0);
+        set<int> s;
+        for(int i=0;i<n;i++){
+            days[flowers[i]-1]=i+1;
+        }
+        for(int i=0;i<k+1;i++){
+            s.insert(days[i]);
+        }
+        int res=days.size();
+        for(int i=k+1;i<days.size();i++){
+            int begin=days[i-k-1];
+            int end=days[i];
+            s.erase(begin);
+            if(k==0||(*s.begin()>begin&&*s.begin()>end)){
+                res=min(res, max(begin, end));
+            }
+            s.insert(end);
+        }
+        return res==days.size()?-1:res;
+    }
+};
+
  
 class Solution {
 public:

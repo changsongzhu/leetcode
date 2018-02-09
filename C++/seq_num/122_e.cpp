@@ -5,6 +5,23 @@ Design an algorithm to find the maximum profit. You may complete as many transac
 **/
 
 
+//DP solution
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size()<2)return 0;
+        int cash=0, hold=INT_MIN;
+        for(auto p:prices){
+            int tmp=cash;
+            cash=max(cash, hold+p);
+            hold=max(hold, tmp-p);
+        }
+        return cash;
+        
+    }
+};
+
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {

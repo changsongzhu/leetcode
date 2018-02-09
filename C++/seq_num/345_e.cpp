@@ -7,6 +7,25 @@ Example 2:
 Given s = "leetcode", return "leotcede".
 **/
 
+//Map solution
+class Solution {
+public:
+    string reverseVowels(string s) {
+        int left=0, right=s.size()-1;
+        unordered_map<char, int> m;
+        m['a']++;m['e']++;m['i']++;m['o']++;m['u']++;
+        m['A']++;m['E']++;m['I']++;m['O']++;m['U']++;
+        while(left<right){
+            while(left<right&&m.count(s[left])==0)left++;
+            while(left<right&&m.count(s[right])==0)right--;
+            swap(s[left++], s[right--]);
+        }
+        return s;
+        
+    }
+};
+
+
 class Solution {
 public:
     string reverseVowels(string s) {

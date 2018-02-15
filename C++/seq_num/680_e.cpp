@@ -16,6 +16,31 @@ Note:
 The string will only contain lowercase characters a-z. The maximum length of the string is 50000.
 **/
 
+/*Another Solution*/
+class Solution {
+public:
+    bool validPalindrome(string s) {
+        return valid(s, false);
+    }
+    
+    bool valid(string s, bool deleted){
+        if(s.size()<2) return true;
+        int left=0,right=s.size()-1;
+        while(left<right){
+            if(s[left]==s[right]){
+                left++;
+                right--;
+            }else{
+                if(deleted==true)return false;
+                return valid(s.substr(left, right-left), true)||valid(s.substr(left+1, right-left), true);
+            }
+        }
+        return true; 
+    }
+
+};
+
+
 class Solution {
 public:
     bool validPalindrome(string s) {

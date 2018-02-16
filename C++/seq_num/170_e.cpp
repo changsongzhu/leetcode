@@ -11,6 +11,32 @@ find(7) -> false
 
 **/
 
+//map solution
+class TwoSum {
+public:
+    /** Initialize your data structure here. */
+    TwoSum() {
+        
+    }
+    
+    /** Add the number to an internal data structure.. */
+    void add(int number) {
+        m[number]++;
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    bool find(int value) { 
+        for(auto a:m){
+            int count=((a.first==value-a.first)?2:1);
+            if(m.count(value-a.first)!=0&&m[value-a.first]>=count)return true;
+        }
+        return false;
+    }
+private:
+    unordered_map<int, int> m;
+};
+
+
 //Right Solution : unordered_multiset
 class TwoSum {
 public:

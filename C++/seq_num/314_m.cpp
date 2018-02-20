@@ -31,7 +31,41 @@ return its vertical order traversal as:
 [20],  
 [7]
 ]
-**/ 
+**/
+
+/*Right Answer*/
+class Solution {
+public:
+    vector<vector<int>> verticalOrder(TreeNode* root) {
+        vector<vector<int> >  res;
+        vector<vector<pair<int, int>> >l;
+        map<int, vector<int>>m;
+        helper(root, 0, 0, l);
+        int index=0;
+        for(auto b:l){
+            for(auto a:b){
+                m[a.first].push_back(a.second);
+            }
+        }
+        for(auto a:m){
+            res.push_back(a.second);
+        }
+        return res;       
+    }
+    void helper(TreeNode *root, int index, int level, vector<vector<pair<int, int>> >&l){
+        if(root==NULL)return;   
+        if(l.size()<=level){
+            l.push_back({{index, root->val}});
+        }else{
+            l[level].push_back({index, root->val});
+        }
+        helper(root->left, index-1,level+1, l);
+        helper(root->right,index+1,level+1, l);
+ 
+    }
+};
+
+/*Wrong Answer*/ 
 class Solution {
 public:
     vector<vector<int>> verticalOrder(TreeNode* root) {

@@ -6,6 +6,26 @@ For example, given citations = [3, 0, 6, 1, 5], which means the researcher has 5
 Note: If there are several possible values for h, the maximum one is taken as the h-index.
 **/
 
+
+/*Optimized solution*/
+class Solution {
+public:
+    int hIndex(vector<int>& c) {
+        sort(c.begin(), c.end());
+        int res=0;
+        for(int i=1;i<=c.size();i++){
+            if(c[c.size()-i]<=i&&c[c.size()-i]>=res){
+                return c[c.size()-i];
+            }else{
+                res=max(res, min(i,c[c.size()-i]));
+            }    
+        }
+        return res;
+        
+    }
+};
+
+
 class Solution {
 public:
     int hIndex(vector<int>& citations) {

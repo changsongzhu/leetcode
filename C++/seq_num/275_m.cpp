@@ -23,3 +23,19 @@ public:
     }
 };
 
+class Solution {
+public:
+    int hIndex(vector<int>& c) {
+        sort(c.begin(), c.end());
+        int res=0;
+        for(int i=1;i<=c.size();i++){
+            if(c[c.size()-i]<=i&&c[c.size()-i]>=res){
+                return c[c.size()-i];
+            }else{
+                res=max(res, min(i,c[c.size()-i]));
+            }    
+        }
+        return res;
+        
+    }
+};

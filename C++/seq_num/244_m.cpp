@@ -10,6 +10,32 @@ Given word1 = "makes", word2 = "coding", return 1.
 Note:
 You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
 **/
+//Using the cache to optimize the solution
+class WordDistance {
+public:
+    WordDistance(vector<string> words) {
+        for(int i=0;i<words.size();i++){
+            m1[words[i]].push_back(i);
+        }     
+    }
+    
+    int shortest(string word1, string word2) {
+        if(cache.count(word1+"#"+word2)) return cache[word1+"#"+word2];
+        int res=INT_MAX;
+        for(int i=0;i<m1[word1].size();i++){
+            for(int j=0;j<m1[word2].size();j++){
+                res=min(res,abs(m1[word1][i]-m1[word2][j]));
+            }
+        }
+        cache[word1+"#"+word2]=cache[word2+"#"+word1]=res;
+        return res;        
+    }
+private:
+    unordered_map<string, vector<int> > m1;
+    unordered_map<string, int> cache;
+};
+
+
 
  
 class WordDistance {

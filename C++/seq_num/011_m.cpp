@@ -4,6 +4,23 @@ Given n non-negative integers a1, a2, ..., an, where each represents a point at 
 Note: You may not slant the container.
 **/
 
+
+/*Refined code*/
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int i=0,j=height.size()-1;
+        int res=0, h=0,dist=j-i;
+        while(i<j){
+            h=(height[i]>height[j]?height[j--]:height[i++]);
+            res=max(res, h*(dist--));
+        }
+        return res;       
+    }
+};
+
+
+
 //Two Pointers: Time Complexity: O(n)
 class Solution {
 public:

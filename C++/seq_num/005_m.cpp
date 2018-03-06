@@ -7,6 +7,36 @@ Input: "babad"  Output: "bab"  Note: "aba" is also a valid answer.
 Example:
 Input: "cbbd"  Output: "bb" 
 **/
+
+/*Center Expand Solution*/
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int start=0;
+        int len=1;
+        for(int i=0;i<s.size();i++){
+            int len1=expand(s, i, i);
+            int len2=expand(s, i, i+1);
+            int tmp=max(len1, len2);
+            if(len<tmp){
+                start=i-(tmp-1)/2;
+                len=tmp;
+            }
+
+        }
+        return s.substr(start, len);
+    }
+    int expand(string s, int left, int right){
+        while(left>=0&&right<s.size()&&s[left]==s[right]){
+            left--;
+            right++;
+        }
+        return right-left-1;
+    }
+};
+
+
+
 class Solution {
 public:
     string longestPalindrome(string s) {
@@ -20,7 +50,7 @@ public:
             dp[j][j]=true;
             for(int i=0;i<j;i++)
             {
-                if((s[i]==s[j]&&j-i<2)||(dp[i+1][j-1]&&s[i]==s[j]))
+                if((s[i]==s[j]&&(j-i<2||dp[i+1][j-1]==true))
                 {
                     dp[i][j]=true;
                     if((j-i+1)>len)

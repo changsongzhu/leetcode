@@ -40,6 +40,66 @@ and
 are considered same island shapes. Because if we flip the first array in the up/down direction, then they have the same shapes.
 Note: The length of each dimension in the given grid does not exceed 50.
 
+/*Refined Solution*/
+class Solution {
+public:
+
+    void dfs(vector<vector<int> >&grid, int x, int y, vector<pair<int, int> > &path, vector<vector<bool> > &visited){
+        if(x<0||x>=grid.size()||y<0||y>=grid[0].size()||grid[x][y]!=1||visited[x][y]==true) return;
+        visited[x][y]=true;
+        path.push_back({x, y});
+        dfs(grid, x-1, y, path, visited);
+        dfs(grid, x+1, y, path, visited);
+        dfs(grid, x, y-1, path, visited);
+        dfs(grid, x, y+1, path, visited);
+    }
+    
+    vector<pair<int,int> > norm(vector<pair<int, int> > &path){
+        
+        vector<vector<pair<int, int> > > t(8);
+        for(auto p:path){
+            t[0].push_back({p.first, p.second});
+            t[1].push_back({p.first, -p.second});
+            t[2].push_back({-p.first, p.second});
+            t[3].push_back({-p.first, -p.second});
+            t[4].push_back({p.second, p.first});
+            t[5].push_back({p.second, -p.first});
+            t[6].push_back({-p.second, p.first});
+            t[7].push_back({-p.second, -p.first});
+        }
+        
+        for(auto &a:t)sort(a.begin(), a.end());
+        for(auto &a:t){
+            for(int i=1;i<a.size();i++){
+                a[i].first-=a[0].first;
+                a[i].second-=a[0].second;
+            }
+            a[0].first=a[0].second=0;
+        }
+        sort(t.begin(), t.end());
+        return t[0];
+
+    }
+    
+    int numDistinctIslands2(vector<vector<int>>& grid) {
+        if(grid.size()==0||grid[0].size()==0)return 0;
+        int m=grid.size(),n=grid[0].size();
+        set<vector<pair<int, int> > > s;
+        vector<vector<bool> > visited(m, vector<bool>(n, false));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1&&visited[i][j]==false){
+                    vector<pair<int, int> > path;
+                    dfs(grid, i, j, path, visited);
+                    s.insert(norm(path));
+                }
+            }
+        }
+        return s.size();
+        
+    }
+};
+
 
 //Refined Solution
 class Solution {

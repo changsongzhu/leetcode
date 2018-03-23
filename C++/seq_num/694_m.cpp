@@ -30,6 +30,51 @@ and
 are considered different island shapes, because we do not consider reflection / rotation.
 Note: The length of each dimension in the given grid does not exceed 50.
 **/
+/*Refined Solution*/
+class Solution {
+public:
+
+    void dfs(vector<vector<int> >&grid, int x, int y, vector<pair<int, int> > &path, vector<vector<bool> > &visited){
+        if(x<0||x>=grid.size()||y<0||y>=grid[0].size()||grid[x][y]!=1||visited[x][y]==true) return;
+        visited[x][y]=true;
+        path.push_back({x, y});
+        dfs(grid, x-1, y, path, visited);
+        dfs(grid, x+1, y, path, visited);
+        dfs(grid, x, y-1, path, visited);
+        dfs(grid, x, y+1, path, visited);
+    }
+    
+    vector<pair<int,int> > norm(vector<pair<int, int> > &path){
+        sort(path.begin(), path.end());
+        for(int i=1;i<path.size();i++){
+            path[i].first-=path[0].first;
+            path[i].second-=path[0].second;
+        }
+        path[0].first=path[0].second=0;
+        return path;
+
+    }
+    
+    int numDistinctIslands(vector<vector<int>>& grid) {
+        if(grid.size()==0||grid[0].size()==0)return 0;
+        int m=grid.size(),n=grid[0].size();
+        set<vector<pair<int, int> > > s;
+        vector<vector<bool> > visited(m, vector<bool>(n, false));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1&&visited[i][j]==false){
+                    vector<pair<int, int> > path;
+                    dfs(grid, i, j, path, visited);
+                    s.insert(norm(path));
+                }
+            }
+        }
+        return s.size();
+        
+    }
+};
+
+
 //Refine Solution
 class Solution{
 public:
